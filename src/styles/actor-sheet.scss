@@ -1,0 +1,391 @@
+.sheet.actor {
+  min-width: 750px;
+
+  form {
+    font-family: OPTILagoon, Arial-bold, arial, sans-serif;
+    font-size  : 12px;
+
+    text-transform: uppercase;
+
+    * {
+      text-transform: uppercase;
+    }
+
+    &.character {
+      .sheet-header {
+        flex: 0;
+
+        .input-group {
+          display       : flex;
+          flex-direction: column;
+
+          label,
+          .label {
+            flex: 1;
+
+            font-size  : 14px;
+            font-weight: bold;
+          }
+
+          &.name {
+            flex-basis: 33%;
+            margin    : 0 8px;
+
+            input {
+              font-size: 18px;
+              height   : 32px;
+              padding  : 2px 6px;
+            }
+          }
+
+          &.experience {
+            display       : flex;
+            flex-direction: column;
+
+            .pip-container {
+              display       : flex;
+              flex-direction: row;
+              flex-wrap     : wrap;
+
+              margin: 2px;
+
+              .pip {
+                flex-basis: 6.66%;
+
+                padding: 2px;
+
+                .image {
+                  width     : 9px;
+                  max-width : 9px;
+                  height    : 9px;
+                  max-height: 9px;
+
+                  border       : 1px solid #505050;
+                  border-radius: 9px;
+
+                  &.hover {
+                    background: #b9b9b9;
+                  }
+
+                  &.earned {
+                    background: green;
+                  }
+
+                  &.used {
+                    background: #505050;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .main {
+      display       : flex;
+      flex-direction: row;
+      flex-wrap     : nowrap;
+      flex          : 1;
+
+      margin-top: 16px;
+
+      input {
+        width: 100%;
+
+        background: none;
+        border    : none;
+
+        font-size : 24px;
+        text-align: center;
+
+        margin-bottom: 4px;
+
+        &[type="number"] {
+          -moz-appearance: textfield;
+        }
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin            : 0;
+        }
+      }
+
+      label,
+      .label {
+        font-weight   : bold;
+        text-transform: uppercase;
+      }
+
+      .track {
+        display       : flex;
+        flex-direction: column;
+
+        .block {
+          display        : flex;
+          align-items    : center;
+          justify-content: center;
+
+          height : 42px;
+          padding: 4px 0;
+
+          border: 2px solid #505050;
+
+          font-size: 1.2em;
+
+          &:not(:first-child) {
+            border-top: none;
+          }
+
+          &.hover {
+            background: #b9b9b9;
+          }
+        }
+      }
+
+      .track-header {
+        background: #505050;
+        color     : white;
+
+        padding: 4px;
+
+        font-size     : 12px;
+        text-align    : center;
+        text-transform: uppercase;
+      }
+
+      .lined-header {
+        display: flex;
+
+        margin: 8px 0;
+
+        .line {
+          flex: 1;
+
+          margin    : 10px 4px;
+          border-top: 1px solid black;
+        }
+
+        .text {
+          flex-shrink   : 1;
+          font-size     : 1.2em;
+          font-weight   : bold;
+          text-transform: uppercase;
+        }
+      }
+
+      .stat {
+        border    : 1px solid black;
+        box-shadow: 2px 2px black;
+      }
+
+      .lhs {
+        flex-basis: 10%;
+
+        .momentum-track {
+          .block {
+            &.active {
+              background: #48ec48;
+            }
+          }
+        }
+
+        .momentum-max,
+        .momentum-reset {
+          display        : flex;
+          flex-direction : column;
+          align-items    : center;
+          justify-content: space-between;
+
+          background: #cacaca;
+          border    : 2px solid #505050;
+          border-top: none;
+
+          label {
+            margin: 4px 0;
+          }
+
+          input {
+            margin-top   : 4px;
+            margin-bottom: 0;
+
+            border: none;
+
+            font-size: 1.6em;
+          }
+        }
+      }
+
+      .center {
+        flex-basis: 80%;
+        margin    : 0 12px;
+
+        section:not(:first-child) {
+          margin-top: 18px;
+        }
+
+        .stats {
+          display       : flex;
+          flex-direction: row;
+
+          .stat {
+            display       : flex;
+            flex-direction: column;
+            align-items   : center;
+
+            flex-basis: 20%;
+
+            margin: 2px;
+          }
+        }
+
+        .vows {
+          .lined-header {
+            .text {
+              &:hover {
+                cursor: pointer;
+                color : #666666;
+              }
+            }
+          }
+
+          .vow-list {
+            list-style  : none;
+            padding-left: 4px;
+
+            .vow-item {
+              &:hover {
+                cursor: pointer;
+                color : #666666;
+              }
+            }
+          }
+        }
+
+        .bonds {
+          .progress {
+            .pip {
+              &.occupied {
+                background: #9c9c9c;
+              }
+            }
+          }
+        }
+
+        .debilities {
+          .content {
+            display: flex;
+
+            strong {
+              display      : block;
+              font-size    : 1.1em;
+              margin-bottom: 4px;
+            }
+
+            .wrapper {
+              display  : flex;
+              flex-wrap: wrap;
+
+              .item {
+                flex-basis: 50%;
+
+                display    : flex;
+                align-items: center;
+
+                font-size: 10px;
+              }
+
+              &:not(:last-child) {
+                margin-bottom: 10px;
+              }
+            }
+
+            .left {
+              flex-basis   : 50%;
+              padding-right: 16px;
+            }
+
+            .right {
+              flex-basis  : 50%;
+              padding-left: 16px;
+            }
+          }
+        }
+      }
+
+      .rhs {
+        flex-basis: 10%;
+
+        .health-track {
+          .block {
+            &.active {
+              background: #ec5151;
+            }
+          }
+        }
+
+        .spirit-track {
+          .block {
+            &.active {
+              background: #1cdad1;
+            }
+          }
+        }
+
+        .supply-track {
+          .block {
+            &.active {
+              background: #dad71c;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .bond-card,
+  .vow-card {
+    position: absolute;
+    top     : 0;
+    left    : 0;
+
+    display       : flex;
+    flex-direction: column;
+
+    width : 200px;
+    height: 100px;
+
+    background: url('assets/ui/parchment.jpg');
+
+    padding      : 6px;
+    border       : 1px solid #111111;
+    border-radius: 2px;
+
+    .name {
+      flex: 0;
+
+      font-family: OPTILagoon, Arial-bold, arial, sans-serif;
+      font-size  : 12px;
+      font-weight: bold;
+
+      text-transform: uppercase;
+    }
+
+    .desc {
+      flex: 1;
+
+      overflow     : hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .vow-card {
+    .rank {
+      font-family: OPTILagoon, Arial-bold, arial, sans-serif;
+      font-size  : 10px;
+
+      text-transform: uppercase;
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import { Ironsworn } from "./config";
+
 export const registerHandlebars = () => {
   Handlebars.registerHelper('repeat', (times, block) => {
     const out = [];
@@ -41,5 +43,9 @@ export const registerHandlebars = () => {
 
   Handlebars.registerHelper('gte', (lhs, rhs) => {
     return lhs >= rhs;
+  });
+
+  Handlebars.registerHelper('rankName', val => {
+    return Ironsworn.rank[val];
   });
 }

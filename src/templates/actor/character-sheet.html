@@ -12,7 +12,9 @@
       <div class="pip-container">
         {{#repeat 30}}
         <div class="pip" data-idx="{{add @index 1}}">
-          <div class="image {{#if (lt @index ../data.experience.earned)}}earned{{/if}} {{#if (lt @index ../data.experience.used)}}used{{/if}}"></div>
+          <div
+            class="image {{#if (lt @index ../data.experience.earned)}}earned{{/if}} {{#if (lt @index ../data.experience.used)}}used{{/if}}">
+          </div>
         </div>
         {{/repeat}}
       </div>
@@ -36,48 +38,51 @@
       <div class="momentum-max">
         <label for="momentum-max">Max</label>
 
-        <input class="momentum-max" type="number" name="data.tracks.momentum.max" value="{{actor.data.tracks.momentum.max}}" min="0" max="10" data-dtype="Number" />
+        <input class="momentum-max" type="number" name="data.tracks.momentum.max"
+          value="{{actor.data.tracks.momentum.max}}" min="0" max="10" data-dtype="Number" />
       </div>
 
       <div class="momentum-reset">
         <label for="momentum-reset">Reset</label>
 
-        <input class="momentum-reset" type="number" name="data.tracks.momentum.reset" value="{{data.tracks.momentum.reset}}" min="0" max="10" data-dtype="Number" />
+        <input class="momentum-reset" type="number" name="data.tracks.momentum.reset"
+          value="{{data.tracks.momentum.reset}}" min="0" max="10" data-dtype="Number" />
       </div>
     </div>
 
     <div class="center">
       <section class="stats">
         <div class="stat edge">
-          <input id="edge" class="edge" type="number" name="data.stats.edge.value" value="{{data.stats.edge.value}}" min="0" max="5" data-dtype="Number" />
-        
+          <input id="edge" class="edge" type="number" name="data.stats.edge.value" value="{{data.stats.edge.value}}"
+            min="0" max="5" data-dtype="Number" />
+
           <label for="edge">Edge</label>
         </div>
 
         <div class="stat heart">
-          <input id="heart" class="heart" type="number" name="data.stats.heart.value" value="{{data.stats.heart.value}}" min="0" max="5"
-            data-dtype="Number" />
-          
+          <input id="heart" class="heart" type="number" name="data.stats.heart.value" value="{{data.stats.heart.value}}"
+            min="0" max="5" data-dtype="Number" />
+
           <label for="heart">Heart</label>
         </div>
 
         <div class="stat iron">
-          <input id="iron" class="iron" type="number" name="data.stats.iron.value" value="{{data.stats.iron.value}}" min="0" max="5"
-            data-dtype="Number" />
+          <input id="iron" class="iron" type="number" name="data.stats.iron.value" value="{{data.stats.iron.value}}"
+            min="0" max="5" data-dtype="Number" />
 
           <label for="iron">Iron</label>
         </div>
 
         <div class="stat shadow">
-          <input id="shadow" class="shadow" type="number" name="data.stats.shadow.value" value="{{data.stats.shadow.value}}" min="0" max="5"
-            data-dtype="Number" />
+          <input id="shadow" class="shadow" type="number" name="data.stats.shadow.value"
+            value="{{data.stats.shadow.value}}" min="0" max="5" data-dtype="Number" />
 
           <label for="shadow">Shadow</label>
         </div>
 
         <div class="stat wits">
-          <input id="wits" class="wits" type="number" name="data.stats.wits.value" value="{{data.stats.wits.value}}" min="0" max="5"
-            data-dtype="Number" />
+          <input id="wits" class="wits" type="number" name="data.stats.wits.value" value="{{data.stats.wits.value}}"
+            min="0" max="5" data-dtype="Number" />
 
           <label for="wits">Wits</label>
         </div>
@@ -104,6 +109,11 @@
           <div class="line"></div>
         </div>
 
+        <ul class="vow-list">
+          {{#each vows as |vow|}}
+          <li class="vow-item" data-idx="{{@index}}" data-vow-id="{{vow.id}}">{{vow.name}}</li>
+          {{/each}}
+        </ul>
       </section>
 
       <section class="debilities">
@@ -116,110 +126,70 @@
         <div class="content">
           <div class="left">
             <strong>Conditions</strong>
-            
+
             <div class="wrapper">
               <div class="item">
-                <input
-                  type="checkbox"
-                  name="data.debilities.conditions.wounded"
-                  id="wounded"
-
-                  {{checked actor.data.debilities.conditions.wounded}}
-                />
+                <input type="checkbox" name="data.debilities.conditions.wounded" id="wounded"
+                  {{checked actor.data.debilities.conditions.wounded}} />
 
                 <label for="wounded">Wounded</label>
               </div>
 
               <div class="item">
-                <input
-                  type="checkbox"
-                  name="data.debilities.conditions.shaken"
-                  id="shaken"
-
-                  {{checked actor.data.debilities.conditions.shaken}}
-                />
+                <input type="checkbox" name="data.debilities.conditions.shaken" id="shaken"
+                  {{checked actor.data.debilities.conditions.shaken}} />
 
                 <label for="shaken">Shaken</label>
               </div>
 
               <div class="item">
-                <input
-                  type="checkbox"
-                  name="data.debilities.conditions.unprepared"
-                  id="unprepared"
-
-                  {{checked actor.data.debilities.conditions.unprepared}}
-                />
+                <input type="checkbox" name="data.debilities.conditions.unprepared" id="unprepared"
+                  {{checked actor.data.debilities.conditions.unprepared}} />
 
                 <label for="unprepared">Unprepared</label>
               </div>
 
               <div class="item">
-                <input
-                  type="checkbox"
-                  name="data.debilities.conditions.encumbered"
-                  id="encumbered"
-
-                  {{checked actor.data.debilities.conditions.encumbered}}
-                />
+                <input type="checkbox" name="data.debilities.conditions.encumbered" id="encumbered"
+                  {{checked actor.data.debilities.conditions.encumbered}} />
 
                 <label for="encumbered">Encumbered</label>
               </div>
             </div>
           </div>
-  
+
           <div class="right">
             <strong>Banes</strong>
-            
+
             <div class="wrapper">
               <div class="item">
-                <input
-                  type="checkbox"
-                  name="data.debilities.banes.maimed"
-                  id="maimed"
-
-                  {{checked actor.data.debilities.banes.maimed}}
-                />
+                <input type="checkbox" name="data.debilities.banes.maimed" id="maimed"
+                  {{checked actor.data.debilities.banes.maimed}} />
 
                 <label for="maimed">Maimed</label>
               </div>
 
               <div class="item">
-                <input
-                  type="checkbox"
-                  name="data.debilities.banes.corrupted"
-                  id="corrupted"
-
-                  {{checked actor.data.debilities.banes.corrupted}}
-                />
+                <input type="checkbox" name="data.debilities.banes.corrupted" id="corrupted"
+                  {{checked actor.data.debilities.banes.corrupted}} />
 
                 <label for="corrupted">Corrupted</label>
               </div>
             </div>
 
             <strong>Burdens</strong>
-            
+
             <div class="wrapper">
               <div class="item">
-                <input
-                  type="checkbox"
-                  name="data.debilities.burdens.cursed"
-                  id="cursed"
-
-                  {{checked actor.data.debilities.burdens.cursed}}
-                />
+                <input type="checkbox" name="data.debilities.burdens.cursed" id="cursed"
+                  {{checked actor.data.debilities.burdens.cursed}} />
 
                 <label for="cursed">Cursed</label>
               </div>
 
               <div class="item">
-                <input
-                  type="checkbox"
-                  name="data.debilities.burdens.tormented"
-                  id="tormented"
-
-                  {{checked actor.data.debilities.burdens.tormented}}
-                />
+                <input type="checkbox" name="data.debilities.burdens.tormented" id="tormented"
+                  {{checked actor.data.debilities.burdens.tormented}} />
 
                 <label for="tormented">Tormented</label>
               </div>
@@ -245,7 +215,7 @@
       <div class="track-header">
         Spirit
       </div>
-      
+
       <div class="track spirit-track">
         {{#each spiritTrack as |spirit|}}
         <div class="block {{#if (gte @index ../spiritIdx)}}active{{/if}}" data-idx="{{@index}}">
@@ -257,7 +227,7 @@
       <div class="track-header">
         Supply
       </div>
-      
+
       <div class="track supply-track">
         {{#each supplyTrack as |supply|}}
         <div class="block {{#if (gte @index ../supplyIdx)}}active{{/if}}" data-idx="{{@index}}">

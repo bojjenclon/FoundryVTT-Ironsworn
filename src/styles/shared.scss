@@ -1,0 +1,32 @@
+.sheet {
+  .input-group {
+
+    label,
+    .label {
+      font-weight: bold;
+      line-height: 24px;
+    }
+  }
+
+  .progress {
+    display        : flex;
+    flex-direction : row;
+    justify-content: center;
+
+    .pip {
+      margin: 0 4px;
+
+      width : 24px;
+      height: 24px;
+      border: 2px solid #505050;
+
+      &.hover {
+        background: #b9b9b9;
+      }
+
+      &.active {
+        background: #7c7c7c;
+      }
+    }
+  }
+}

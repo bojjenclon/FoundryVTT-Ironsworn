@@ -1,0 +1,70 @@
+.sheet.item {
+  &.bond {
+    min-width : 250px;
+    min-height: 150px;
+  }
+
+  &.vow {
+    min-width : 600px;
+    min-height: 300px;
+  }
+
+  form {
+    .sheet-header {
+      flex: 0;
+
+      margin-bottom: 4px;
+
+      input {
+        font-size: 22px;
+        height   : 34px;
+        padding  : 0 6px;
+      }
+    }
+
+    .sheet-body {
+      flex          : 1;
+      display       : flex;
+      flex-direction: column;
+
+      >* {
+        flex  : 0;
+        margin: 8px 0;
+
+        &:last-child {
+          flex: 1;
+        }
+      }
+
+      textarea {
+        resize     : none;
+        width      : 100%;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .ranks {
+        display        : flex;
+        align-items    : center;
+        justify-content: space-around;
+
+        font-family   : OPTILagoon, Arial-bold, arial, sans-serif;
+        text-transform: uppercase;
+        font-size     : 10px;
+
+        .rank-wrapper {
+          display    : flex;
+          align-items: center;
+        }
+      }
+
+      .input-group {
+        display       : flex;
+        flex-direction: column;
+
+        textarea {
+          flex: 1;
+        }
+      }
+    }
+  }
+}

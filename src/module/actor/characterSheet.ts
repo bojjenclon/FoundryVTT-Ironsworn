@@ -1,7 +1,7 @@
 import { Ironsworn } from "../config";
 import { IronswornItem } from "../item/item";
 
-export interface  CharacterSheetData extends ActorSheetData {
+export interface CharacterSheetData extends ActorSheetData {
   momentumTrack: Array<Number>;
   healthTrack: Array<Number>;
   spiritTrack: Array<Number>;
@@ -13,6 +13,7 @@ export interface  CharacterSheetData extends ActorSheetData {
   supplyIdx: Number;
 
   bonds: Array<Object>;
+  vows: Array<Object>;
 
   hoverCard: HTMLElement;
 }
@@ -28,13 +29,14 @@ export class IronswornCharacterSheet extends ActorSheet {
 
   get template() {
     const { type } = this.actor.data;
-    return `systems/ironsworn/templates/actor/${type}-sheet.html`; 
+    return `systems/ironsworn/templates/actor/${type}-sheet.html`;
   }
 
-  bondHoveredIdx : Number = -1;
+  bondHoveredIdx: Number = -1;
+  vowHoveredIdx: Number = -1;
   hoverCard: HTMLElement;
 
-  getData() : CharacterSheetData {
+  getData(): CharacterSheetData {
     const data = super.getData() as CharacterSheetData;
     const { actor } = this;
 
@@ -83,6 +85,7 @@ export class IronswornCharacterSheet extends ActorSheet {
     });
     data.supplyIdx = supplyIdx;
 
+    // Bonds
     const bonds = [];
     for (let i = 0; i < 10; i++) {
       bonds.push({});
@@ -95,12 +98,20 @@ export class IronswornCharacterSheet extends ActorSheet {
 
     data.bonds = bonds;
 
+    // Vows
+    const vows = [];
+    const actorVows = actor.itemTypes['vow'] || [];
+    actorVows.forEach(async (bond, idx) => {
+      vows[idx] = bond;
+    });
+    data.vows = vows;
+
     data.hoverCard = this.hoverCard;
 
     return data;
   }
 
-  activateListeners(html : JQuery) {
+  activateListeners(html: JQuery) {
     super.activateListeners(html);
 
     const expLabel = html.find('.experience .label');
@@ -109,7 +120,7 @@ export class IronswornCharacterSheet extends ActorSheet {
         'data.experience.earned': 0,
         'data.experience.used': 0
       });
-      
+
       evt.preventDefault();
     });
 
@@ -117,7 +128,7 @@ export class IronswornCharacterSheet extends ActorSheet {
       await this.actor.update({
         'data.experience.used': 0
       });
-      
+
       evt.preventDefault();
     });
 
@@ -126,7 +137,7 @@ export class IronswornCharacterSheet extends ActorSheet {
       const target = evt.currentTarget;
       expPips.each((idx, el) => {
         $(el).find('.image').addClass('hover');
-        
+
         if (el == target) {
           return false;
         }
@@ -137,7 +148,7 @@ export class IronswornCharacterSheet extends ActorSheet {
       const target = evt.currentTarget;
       expPips.each((idx, el) => {
         $(el).find('.image').removeClass('hover');
-        
+
         if (el == target) {
           return false;
         }
@@ -149,7 +160,7 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       const btn = evt.button;
       const target = evt.currentTarget;
-      
+
       if (btn === 0) {
         const pipIdx = parseInt(target.dataset.idx);
         const expUsed = actor.data.data.experience.used;
@@ -186,7 +197,7 @@ export class IronswornCharacterSheet extends ActorSheet {
     //     const target = evt.currentTarget;
     //     pips.each((idx, el) => {
     //       $(el).addClass('hover');
-          
+
     //       if (el == target) {
     //         return false;
     //       }
@@ -197,7 +208,7 @@ export class IronswornCharacterSheet extends ActorSheet {
     //     const target = evt.currentTarget;
     //     pips.each((idx, el) => {
     //       $(el).removeClass('hover');
-          
+
     //       if (el == target) {
     //         return false;
     //       }
@@ -216,7 +227,7 @@ export class IronswornCharacterSheet extends ActorSheet {
         const target = evt.currentTarget;
         revBlocks.each((idx, el) => {
           $(el).addClass('hover');
-          
+
           if (el == target) {
             return false;
           }
@@ -227,7 +238,7 @@ export class IronswornCharacterSheet extends ActorSheet {
         const target = evt.currentTarget;
         revBlocks.each((idx, el) => {
           $(el).removeClass('hover');
-          
+
           if (el == target) {
             return false;
           }
@@ -238,10 +249,10 @@ export class IronswornCharacterSheet extends ActorSheet {
     const momentumTrackBlocks = html.find('.momentum-track .block');
     momentumTrackBlocks.on('click', async (evt) => {
       const { actor } = this;
-      
+
       const btn = evt.button;
       const target = evt.currentTarget;
-      
+
       if (btn === 0) {
         const blockIdx = parseInt(target.dataset.idx);
         let momentumValue = 0;
@@ -261,10 +272,10 @@ export class IronswornCharacterSheet extends ActorSheet {
     const healthTrackBlocks = html.find('.health-track .block');
     healthTrackBlocks.on('click', async (evt) => {
       const { actor } = this;
-      
+
       const btn = evt.button;
       const target = evt.currentTarget;
-      
+
       if (btn === 0) {
         const blockIdx = parseInt(target.dataset.idx);
         let healthValue = 0;
@@ -284,10 +295,10 @@ export class IronswornCharacterSheet extends ActorSheet {
     const spiritTrackBlocks = html.find('.spirit-track .block');
     spiritTrackBlocks.on('click', async (evt) => {
       const { actor } = this;
-      
+
       const btn = evt.button;
       const target = evt.currentTarget;
-      
+
       if (btn === 0) {
         const blockIdx = parseInt(target.dataset.idx);
         let spiritValue = 0;
@@ -307,10 +318,10 @@ export class IronswornCharacterSheet extends ActorSheet {
     const supplyTrackBlocks = html.find('.supply-track .block');
     supplyTrackBlocks.on('click', async (evt) => {
       const { actor } = this;
-      
+
       const btn = evt.button;
       const target = evt.currentTarget;
-      
+
       if (btn === 0) {
         const blockIdx = parseInt(target.dataset.idx);
         let supplyValue = 0;
@@ -326,14 +337,14 @@ export class IronswornCharacterSheet extends ActorSheet {
         });
       }
     });
-  
+
     const bondPips = html.find('.bonds .progress .pip');
     bondPips.on('click', async (evt) => {
       const { actor } = this;
-      
+
       const btn = evt.button;
       const target = evt.currentTarget;
-      
+
       if (btn === 0) {
         const { bondId } = target.dataset;
         if (bondId && bondId.length > 0) {
@@ -351,7 +362,7 @@ export class IronswornCharacterSheet extends ActorSheet {
 
     bondPips.on('contextmenu', async (evt) => {
       const { actor } = this;
-      
+
       const target = evt.currentTarget;
       const bond = target.dataset.bondId;
 
@@ -360,12 +371,11 @@ export class IronswornCharacterSheet extends ActorSheet {
       }
     });
 
-    // const bondCard = document.createElement('div');
     bondPips.on('mouseover', async (evt) => {
       evt.stopPropagation();
 
       const { actor } = this;
-      
+
       const target = evt.currentTarget;
       const { bondId } = target.dataset;
       const idx = parseInt(target.dataset.idx);
@@ -413,6 +423,72 @@ export class IronswornCharacterSheet extends ActorSheet {
         // Unhighlight
         const highlightedPip = html.find('.bonds .pip.hover').first();
         highlightedPip.removeClass('hover');
+      }
+    });
+
+    const vowsHeader = html.find('.vows .lined-header .text');
+    vowsHeader.on('click', async (evt) => {
+      const { actor } = this;
+
+      await actor.createOwnedItem({
+        name: 'New Vow',
+        type: 'vow',
+        data: {}
+      }, { renderSheet: true });
+    });
+
+    const vowItems = html.find('.vows .vow-list .vow-item');
+    vowItems.on('click', async (evt) => {
+      const { actor } = this;
+      const target = evt.currentTarget;
+
+      const vow = await actor.getOwnedItem(target.dataset.vowId);
+      vow.sheet.render(true);
+    });
+
+    vowItems.on('mouseover', async (evt) => {
+      evt.stopPropagation();
+
+      const { actor } = this;
+
+      const target = evt.currentTarget;
+      const { vowId } = target.dataset;
+      const idx = parseInt(target.dataset.idx);
+
+      // If we have a bond, show its info card
+      if (this.vowHoveredIdx === idx) {
+        return;
+      }
+
+      const vow = actor.getOwnedItem(vowId);
+
+      this.vowHoveredIdx = idx;
+
+      const position = $(target).position();
+      const params = {
+        x: `${position.left - 50}px`,
+        y: `${position.top + 28}px`,
+        name: vow.name,
+        rank: Ironsworn.rank[vow.data.data.rank],
+        text: vow.data.data.description.value
+      };
+      const html = await renderTemplate('systems/ironsworn/templates/dialog/vow-card.html', params);
+      this.hoverCard = html;
+
+      await this._onSubmit(evt);
+      this.render(true);
+    });
+
+    vowItems.on('mouseout', async (evt) => {
+      evt.stopPropagation();
+
+      // Hide hover card
+      if (this.hoverCard) {
+        this.vowHoveredIdx = -1;
+        delete this.hoverCard;
+
+        await this._onSubmit(evt);
+        this.render(true);
       }
     });
   }

@@ -1,13 +1,13 @@
-@mixin track-hover($activeColor) {
-  &.active {
+@mixin active-hover($activeColor, $prefix: "") {
+  &.#{$prefix}active {
     background: $activeColor;
   }
 
-  &.hover-active {
+  &.#{$prefix}hover-active {
     background: $activeColor !important;
   }
 
-  &.hover-inactive {
+  &.#{$prefix}hover-inactive {
     background: inherit !important;
   }
 }
@@ -77,17 +77,16 @@
                   border       : 1px solid #505050;
                   border-radius: 9px;
 
-                  &.hover {
-                    background: #b9b9b9;
-                  }
+                  @include active-hover(green, "earned-");
+                  @include active-hover(#505050, "used-");
 
-                  &.earned {
-                    background: green;
-                  }
+                  // &.earned {
+                  //   background: green;
+                  // }
 
-                  &.used {
-                    background: #505050;
-                  }
+                  // &.used {
+                  //   background: #505050;
+                  // }
                 }
               }
             }
@@ -195,7 +194,7 @@
 
         .momentum-track {
           .block {
-            @include track-hover(#48ec48);
+            @include active-hover(#48ec48);
           }
         }
 
@@ -335,19 +334,19 @@
 
         .health-track {
           .block {
-            @include track-hover(#ec5151);
+            @include active-hover(#ec5151);
           }
         }
 
         .spirit-track {
           .block {
-            @include track-hover(#1cdad1);
+            @include active-hover(#1cdad1);
           }
         }
 
         .supply-track {
           .block {
-            @include track-hover(#dad71c);
+            @include active-hover(#dad71c);
           }
         }
       }

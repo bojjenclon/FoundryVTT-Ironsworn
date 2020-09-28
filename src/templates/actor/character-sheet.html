@@ -10,13 +10,13 @@
       <div class="label">Experience</div>
 
       <div class="pip-container">
-        {{#repeat 30}}
+        <!-- Start idx at 1 since the first pip represents 1 XP, not 0 XP -->
+        {{#each experience as |exp|}}
         <div class="pip" data-idx="{{add @index 1}}">
-          <div
-            class="image {{#if (lt @index ../data.experience.earned)}}earned{{/if}} {{#if (lt @index ../data.experience.used)}}used{{/if}}">
+          <div class="image {{#if exp.earned}}earned-active{{/if}} {{#if exp.used}}used-active{{/if}}">
           </div>
         </div>
-        {{/repeat}}
+        {{/each}}
       </div>
     </div>
   </header>

@@ -12,6 +12,8 @@ export interface CharacterSheetData extends ActorSheetData {
   spiritIdx: Number;
   supplyIdx: Number;
 
+  experience: Array<Object>;
+
   bonds: Array<Object>;
   vows: Array<Object>;
 
@@ -85,6 +87,17 @@ export class IronswornCharacterSheet extends ActorSheet {
     });
     data.supplyIdx = supplyIdx;
 
+    const experience = [];
+    const expEarned = actor.data.data.experience.earned;
+    const expUsed = actor.data.data.experience.used;
+    for (let i = 0; i < 30; i++) {
+      experience.push({
+        earned: i < expEarned,
+        used: i < expUsed
+      });
+    }
+    data.experience = experience;
+
     // Bonds
     const bonds = [];
     for (let i = 0; i < 10; i++) {
@@ -135,22 +148,24 @@ export class IronswornCharacterSheet extends ActorSheet {
     const expPips = html.find('.experience .pip');
     expPips.on('mouseover', evt => {
       const target = evt.currentTarget;
+      let isActive = true;
       expPips.each((idx, el) => {
-        $(el).find('.image').addClass('hover');
+        $(el).find('.image').addClass(isActive ? 'earned-hover-active' : 'earned-hover-inactive');
 
         if (el == target) {
-          return false;
+          isActive = false;
         }
       });
     });
 
     expPips.on('mouseout', evt => {
       const target = evt.currentTarget;
+      let isActive = true;
       expPips.each((idx, el) => {
-        $(el).find('.image').removeClass('hover');
+        $(el).find('.image').removeClass(isActive ? 'earned-hover-active' : 'earned-hover-inactive');
 
         if (el == target) {
-          return false;
+          isActive = false;
         }
       });
     });

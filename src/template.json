@@ -1,0 +1,139 @@
+{
+  "Actor": {
+    "types": [
+      "character",
+      "npc"
+    ],
+    "templates": {
+      "common": {
+        "version": 1
+      }
+    },
+    "character": {
+      "templates": [
+        "common"
+      ],
+      "stats": {
+        "edge": {
+          "value": 0
+        },
+        "heart": {
+          "value": 0
+        },
+        "iron": {
+          "value": 0
+        },
+        "shadow": {
+          "value": 0
+        },
+        "wits": {
+          "value": 0
+        }
+      },
+      "tracks": {
+        "health": {
+          "value": 5
+        },
+        "spirit": {
+          "value": 5
+        },
+        "supply": {
+          "value": 5
+        },
+        "momentum": {
+          "value": 2,
+          "max": 10,
+          "reset": 2
+        }
+      },
+      "experience": {
+        "earned": 0,
+        "spent": 0
+      },
+      "details": {
+        "biography": {
+          "value": ""
+        }
+      },
+      "equipment": {
+        "value": []
+      },
+      "vows": {
+        "value": []
+      },
+      "bonds": {
+        "value": []
+      },
+      "debilities": {
+        "conditions": {
+          "wounded": false,
+          "shaken": false,
+          "unprepared": false,
+          "encumbered": false
+        },
+        "banes": {
+          "maimed": false,
+          "corrupted": false
+        },
+        "burdens": {
+          "cursed": false,
+          "tormented": false
+        }
+      }
+    },
+    "npc": {
+      "templates": [
+        "common"
+      ],
+      "rank": 0,
+      "features": {
+        "value": ""
+      },
+      "drives": {
+        "value": ""
+      },
+      "tactics": {
+        "value": ""
+      }
+    }
+  },
+  "Item": {
+    "types": [
+      "equipment",
+      "vow",
+      "bond"
+    ],
+    "templates": {
+      "common": {
+        "version": 1
+      }
+    },
+    "equipment": {
+      "templates": [
+        "common"
+      ],
+      "description": {
+        "value": ""
+      },
+      "quantity": 0
+    },
+    "vow": {
+      "templates": [
+        "common"
+      ],
+      "rank": 0,
+      "progress": {
+        "value": 0
+      },
+      "complete": false
+    },
+    "bond": {
+      "templates": [
+        "common"
+      ],
+      "description": {
+        "value": ""
+      }
+    }
+  }
+}

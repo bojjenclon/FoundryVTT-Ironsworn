@@ -1,0 +1,30 @@
+{
+  "name": "ironsworn",
+  "title": "Ironsworn",
+  "description": "",
+  "version": "0.0.1",
+  "author": "bojjenclon",
+  "authors": [
+    {
+      "name": "",
+      "email": "",
+      "url": ""
+    }
+  ],
+  "scripts": [],
+  "esmodules": ["ironsworn.js"],
+  "styles": ["ironsworn.css"],
+  "packs": [],
+  "languages": [],
+  "gridDistance": 1,
+  "gridUnits": "",
+  "minimumCoreVersion": "0.6.0",
+  "compatibleCoreVersion": "0.6.5",
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "license": "",
+  "readme": "",
+  "bugs": "",
+  "changelog": ""
+}

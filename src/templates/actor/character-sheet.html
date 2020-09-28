@@ -1,0 +1,273 @@
+<form class="{{cssClass}} character flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <div class="input-group name">
+      <label for="actor.name">Character</label>
+      <input class="name" type="text" name="actor.name" value="{{actor.name}}" data-dtype="String" />
+    </div>
+
+    <div class="input-group experience">
+      <div class="label">Experience</div>
+
+      <div class="pip-container">
+        {{#repeat 30}}
+        <div class="pip" data-idx="{{add @index 1}}">
+          <div class="image {{#if (lt @index ../data.experience.earned)}}earned{{/if}} {{#if (lt @index ../data.experience.used)}}used{{/if}}"></div>
+        </div>
+        {{/repeat}}
+      </div>
+    </div>
+  </header>
+
+  <section class="main">
+    <div class="lhs">
+      <div class="track-header">
+        Mntm
+      </div>
+
+      <div class="track momentum-track">
+        {{#each momentumTrack as |momentum|}}
+        <div class="block {{#if (gte @index ../momentumIdx)}}active{{/if}}" data-idx="{{@index}}">
+          {{withSign momentum}}
+        </div>
+        {{/each}}
+      </div>
+
+      <div class="momentum-max">
+        <label for="momentum-max">Max</label>
+
+        <input class="momentum-max" type="number" name="data.tracks.momentum.max" value="{{actor.data.tracks.momentum.max}}" min="0" max="10" data-dtype="Number" />
+      </div>
+
+      <div class="momentum-reset">
+        <label for="momentum-reset">Reset</label>
+
+        <input class="momentum-reset" type="number" name="data.tracks.momentum.reset" value="{{data.tracks.momentum.reset}}" min="0" max="10" data-dtype="Number" />
+      </div>
+    </div>
+
+    <div class="center">
+      <section class="stats">
+        <div class="stat edge">
+          <input id="edge" class="edge" type="number" name="data.stats.edge.value" value="{{data.stats.edge.value}}" min="0" max="5" data-dtype="Number" />
+        
+          <label for="edge">Edge</label>
+        </div>
+
+        <div class="stat heart">
+          <input id="heart" class="heart" type="number" name="data.stats.heart.value" value="{{data.stats.heart.value}}" min="0" max="5"
+            data-dtype="Number" />
+          
+          <label for="heart">Heart</label>
+        </div>
+
+        <div class="stat iron">
+          <input id="iron" class="iron" type="number" name="data.stats.iron.value" value="{{data.stats.iron.value}}" min="0" max="5"
+            data-dtype="Number" />
+
+          <label for="iron">Iron</label>
+        </div>
+
+        <div class="stat shadow">
+          <input id="shadow" class="shadow" type="number" name="data.stats.shadow.value" value="{{data.stats.shadow.value}}" min="0" max="5"
+            data-dtype="Number" />
+
+          <label for="shadow">Shadow</label>
+        </div>
+
+        <div class="stat wits">
+          <input id="wits" class="wits" type="number" name="data.stats.wits.value" value="{{data.stats.wits.value}}" min="0" max="5"
+            data-dtype="Number" />
+
+          <label for="wits">Wits</label>
+        </div>
+      </section>
+
+      <section class="bonds">
+        <div class="lined-header">
+          <div class="line"></div>
+          <div class="text">Bonds</div>
+          <div class="line"></div>
+        </div>
+
+        <div class="progress">
+          {{#each bonds as |bond idx|}}
+          <div class="pip {{#if bond.id}}occupied{{/if}}" data-idx="{{idx}}" data-bond-id="{{bond.id}}"></div>
+          {{/each}}
+        </div>
+      </section>
+
+      <section class="vows">
+        <div class="lined-header">
+          <div class="line"></div>
+          <div class="text">Vows</div>
+          <div class="line"></div>
+        </div>
+
+      </section>
+
+      <section class="debilities">
+        <div class="lined-header">
+          <div class="line"></div>
+          <div class="text">Debilities</div>
+          <div class="line"></div>
+        </div>
+
+        <div class="content">
+          <div class="left">
+            <strong>Conditions</strong>
+            
+            <div class="wrapper">
+              <div class="item">
+                <input
+                  type="checkbox"
+                  name="data.debilities.conditions.wounded"
+                  id="wounded"
+
+                  {{checked actor.data.debilities.conditions.wounded}}
+                />
+
+                <label for="wounded">Wounded</label>
+              </div>
+
+              <div class="item">
+                <input
+                  type="checkbox"
+                  name="data.debilities.conditions.shaken"
+                  id="shaken"
+
+                  {{checked actor.data.debilities.conditions.shaken}}
+                />
+
+                <label for="shaken">Shaken</label>
+              </div>
+
+              <div class="item">
+                <input
+                  type="checkbox"
+                  name="data.debilities.conditions.unprepared"
+                  id="unprepared"
+
+                  {{checked actor.data.debilities.conditions.unprepared}}
+                />
+
+                <label for="unprepared">Unprepared</label>
+              </div>
+
+              <div class="item">
+                <input
+                  type="checkbox"
+                  name="data.debilities.conditions.encumbered"
+                  id="encumbered"
+
+                  {{checked actor.data.debilities.conditions.encumbered}}
+                />
+
+                <label for="encumbered">Encumbered</label>
+              </div>
+            </div>
+          </div>
+  
+          <div class="right">
+            <strong>Banes</strong>
+            
+            <div class="wrapper">
+              <div class="item">
+                <input
+                  type="checkbox"
+                  name="data.debilities.banes.maimed"
+                  id="maimed"
+
+                  {{checked actor.data.debilities.banes.maimed}}
+                />
+
+                <label for="maimed">Maimed</label>
+              </div>
+
+              <div class="item">
+                <input
+                  type="checkbox"
+                  name="data.debilities.banes.corrupted"
+                  id="corrupted"
+
+                  {{checked actor.data.debilities.banes.corrupted}}
+                />
+
+                <label for="corrupted">Corrupted</label>
+              </div>
+            </div>
+
+            <strong>Burdens</strong>
+            
+            <div class="wrapper">
+              <div class="item">
+                <input
+                  type="checkbox"
+                  name="data.debilities.burdens.cursed"
+                  id="cursed"
+
+                  {{checked actor.data.debilities.burdens.cursed}}
+                />
+
+                <label for="cursed">Cursed</label>
+              </div>
+
+              <div class="item">
+                <input
+                  type="checkbox"
+                  name="data.debilities.burdens.tormented"
+                  id="tormented"
+
+                  {{checked actor.data.debilities.burdens.tormented}}
+                />
+
+                <label for="tormented">Tormented</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="rhs">
+      <div class="track-header">
+        Health
+      </div>
+
+      <div class="track health-track">
+        {{#each healthTrack as |health|}}
+        <div class="block {{#if (gte @index ../healthIdx)}}active{{/if}}" data-idx="{{@index}}">
+          {{withSign health}}
+        </div>
+        {{/each}}
+      </div>
+
+      <div class="track-header">
+        Spirit
+      </div>
+      
+      <div class="track spirit-track">
+        {{#each spiritTrack as |spirit|}}
+        <div class="block {{#if (gte @index ../spiritIdx)}}active{{/if}}" data-idx="{{@index}}">
+          {{withSign spirit}}
+        </div>
+        {{/each}}
+      </div>
+
+      <div class="track-header">
+        Supply
+      </div>
+      
+      <div class="track supply-track">
+        {{#each supplyTrack as |supply|}}
+        <div class="block {{#if (gte @index ../supplyIdx)}}active{{/if}}" data-idx="{{@index}}">
+          {{withSign supply}}
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </section>
+
+</form>
+
+{{{hoverCard}}}

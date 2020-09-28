@@ -4,8 +4,8 @@ export class IronswornItemSheet extends ItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["ironsworn", "sheet", "item"],
-      width: 500,
-      height: 350
+      width: 300,
+      height: 200
     });
   }
 
@@ -33,7 +33,7 @@ export class IronswornItemSheet extends ItemSheet {
   }
 
   getData() {
-    const data  = super.getData();
+    const data = super.getData();
 
     const { type } = this.item.data;
     switch (type) {
@@ -49,11 +49,15 @@ export class IronswornItemSheet extends ItemSheet {
     return data;
   }
 
-  _bondListeners(html : JQuery) {
-
+  _bondListeners(html: JQuery) {
+    const window = html.closest('.window-app');
+    window.addClass('bond');
   }
 
-  _vowListeners(html : JQuery) {
+  _vowListeners(html: JQuery) {
+    const window = html.closest('.window-app');
+    window.addClass('vow');
+
     const { item } = this;
 
     const ranks = html.find('.ranks input');
@@ -63,14 +67,58 @@ export class IronswornItemSheet extends ItemSheet {
       const el = evt.currentTarget;
 
       await item.update({
-        'data.rank': el.dataset.rankIdx
+        'data.rank': parseInt(el.dataset.rankIdx)
       });
 
       await this._onSubmit(evt);
     });
+
+    const progressPips = html.find('.progress .pip');
+    progressPips.on('mouseover', evt => {
+      const target = evt.currentTarget;
+      progressPips.each((idx, el) => {
+        $(el).addClass('hover');
+
+        if (el == target) {
+          return false;
+        }
+      });
+    });
+
+    progressPips.on('mouseout', evt => {
+      const target = evt.currentTarget;
+      progressPips.each((idx, el) => {
+        $(el).removeClass('hover');
+
+        if (el == target) {
+          return false;
+        }
+      });
+    });
+
+    progressPips.on('click', async (evt) => {
+      const { item } = this;
+
+      const btn = evt.button;
+      const target = evt.currentTarget;
+
+      if (btn === 0) {
+        item.update({
+          'data.progress.value': parseInt(target.dataset.idx) + 1
+        })
+      }
+    });
+
+    progressPips.on('contextmenu', async (evt) => {
+      const { item } = this;
+
+      item.update({
+        'data.progress.value': 0
+      });
+    });
   }
 
-  activateListeners(html : JQuery) {
+  activateListeners(html: JQuery) {
     super.activateListeners(html);
 
     const { type } = this.item.data;

@@ -4,16 +4,24 @@
   </header>
 
   <div class="sheet-body">
+    <div class="ranks">
+      {{#each ranks as |rank|}}
+      <div class="rank-wrapper">
+        <input id="rank-{{rank}}" type="radio" {{checked (eq rank ../currentRank)}} data-rank-idx="{{@index}}" />
+        <label for="rank-{{rank}}">{{rank}}</label>
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="progress">
+      {{#repeat 10}}
+      <div class="pip {{#if (lt @index ../data.progress.value)}}active{{/if}}" data-idx="{{@index}}"></div>
+      {{/repeat}}
+    </div>
+
     <div class="input-group">
       <label for="description">Description</label>
       <textarea id="description" class="description" name="data.description.value">{{data.description.value}}</textarea>
-    </div>
-
-    <div class="ranks">
-      {{#each ranks as |rank|}}
-        <input id="rank-{{rank}}" type="radio" {{checked (eq rank ../currentRank)}} data-rank-idx="{{@index}}" />
-        <label for="rank-{{rank}}">{{rank}}</label>
-      {{/each}}
     </div>
   </div>
 </form>

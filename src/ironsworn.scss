@@ -29,12 +29,47 @@
   font-style : normal;
 }
 
+// Shared
+.sheet {
+  .input-group {
+
+    label,
+    .label {
+      font-weight: bold;
+      line-height: 24px;
+    }
+  }
+
+  .progress {
+    display        : flex;
+    flex-direction : row;
+    justify-content: center;
+
+    .pip {
+      margin: 0 4px;
+
+      width : 24px;
+      height: 24px;
+      border: 2px solid #505050;
+
+      &.hover {
+        background: #b9b9b9;
+      }
+
+      &.active {
+        background: #7c7c7c;
+      }
+    }
+  }
+}
+
+// Actor
 .sheet.actor {
   min-width: 750px;
 
   form {
     font-family: OPTILagoon, Arial-bold, arial, sans-serif;
-    font-size: 12px;
+    font-size  : 12px;
 
     text-transform: uppercase;
 
@@ -42,30 +77,22 @@
       text-transform: uppercase;
     }
 
-    .input-group {
-      label,
-      .label {
-        font-weight: bold;
-        line-height: 24px;
-      }
-    }
-
     &.character {
       .sheet-header {
         flex: 0;
 
         .input-group {
-          display: flex;
+          display       : flex;
           flex-direction: column;
 
           label,
           .label {
             flex: 1;
-            
-            font-size: 14px;
+
+            font-size  : 14px;
             font-weight: bold;
           }
-          
+
           &.name {
             flex-basis: 33%;
             margin    : 0 8px;
@@ -99,9 +126,9 @@
                   height    : 9px;
                   max-height: 9px;
 
-                  border: 1px solid #505050;
+                  border       : 1px solid #505050;
                   border-radius: 9px;
-                  
+
                   &.hover {
                     background: #b9b9b9;
                   }
@@ -166,12 +193,12 @@
           align-items    : center;
           justify-content: center;
 
-          height: 42px;
+          height : 42px;
           padding: 4px 0;
 
           border: 2px solid #505050;
 
-          font-size  : 1.2em;
+          font-size: 1.2em;
 
           &:not(:first-child) {
             border-top: none;
@@ -207,9 +234,9 @@
         }
 
         .text {
-          flex-shrink: 1;
-          font-size: 1.2em;
-          font-weight: bold;
+          flex-shrink   : 1;
+          font-size     : 1.2em;
+          font-weight   : bold;
           text-transform: uppercase;
         }
       }
@@ -232,13 +259,13 @@
 
         .momentum-max,
         .momentum-reset {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
+          display        : flex;
+          flex-direction : column;
+          align-items    : center;
           justify-content: space-between;
 
           background: #cacaca;
-          border: 2px solid #505050;
+          border    : 2px solid #505050;
           border-top: none;
 
           label {
@@ -246,7 +273,7 @@
           }
 
           input {
-            margin-top: 4px;
+            margin-top   : 4px;
             margin-bottom: 0;
 
             border: none;
@@ -289,42 +316,24 @@
           }
         }
 
-        .progress {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-
-          .pip {
-            margin: 0 4px;
-
-            width: 24px;
-            height: 24px;
-            border: 2px solid #505050;
-
-            &.hover {
-              background: #b9b9b9;
-            }
-          }
-        }
-
         .debilities {
           .content {
             display: flex;
 
             strong {
-              display: block;
-              font-size: 1.1em;
+              display      : block;
+              font-size    : 1.1em;
               margin-bottom: 4px;
             }
 
             .wrapper {
-              display: flex;
+              display  : flex;
               flex-wrap: wrap;
 
               .item {
                 flex-basis: 50%;
 
-                display: flex;
+                display    : flex;
                 align-items: center;
 
                 font-size: 10px;
@@ -334,14 +343,14 @@
                 margin-bottom: 10px;
               }
             }
-          
+
             .left {
-              flex-basis: 50%;
+              flex-basis   : 50%;
               padding-right: 16px;
             }
 
             .right {
-              flex-basis: 50%;
+              flex-basis  : 50%;
               padding-left: 16px;
             }
           }
@@ -380,19 +389,20 @@
 
   .bond-card {
     position: absolute;
-    top: 0;
-    left: 0;
+    top     : 0;
+    left    : 0;
 
-    display: flex;
+    display       : flex;
     flex-direction: column;
 
-    width: 200px;
+    width : 200px;
     height: 100px;
 
     background: url('assets/ui/parchment.jpg');
 
-    padding: 6px;
-    border: 1px solid #111111;
+    padding      : 6px;
+    border       : 1px solid #111111;
+    border-radius: 2px;
 
     .name {
       flex: 0;
@@ -403,40 +413,45 @@
     .desc {
       flex: 1;
 
-      overflow: hidden;
+      overflow     : hidden;
       text-overflow: ellipsis;
     }
   }
 }
 
+// Item
 .sheet.item {
-  form {
-    .input-group {
-      label,
-      .label {
-        font-weight: bold;
-        line-height: 24px;
-      }
-    }
+  &.bond {
+    min-width : 250px;
+    min-height: 150px;
+  }
 
+  &.vow {
+    min-width : 600px;
+    min-height: 300px;
+  }
+
+  form {
     .sheet-header {
       flex: 0;
-  
+
       margin-bottom: 4px;
-  
+
       input {
         font-size: 22px;
-        height: 34px;
+        height   : 34px;
+        padding  : 0 6px;
       }
     }
-  
+
     .sheet-body {
-      flex: 1;
-      display: flex;
+      flex          : 1;
+      display       : flex;
       flex-direction: column;
 
-      > * {
-        flex: 0;
+      >* {
+        flex  : 0;
+        margin: 8px 0;
 
         &:last-child {
           flex: 1;
@@ -444,10 +459,33 @@
       }
 
       textarea {
-        resize: none;
-        width: 100%;
-        height: 4.5rem;
+        resize     : none;
+        width      : 100%;
         font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .ranks {
+        display        : flex;
+        align-items    : center;
+        justify-content: space-around;
+
+        font-family   : OPTILagoon, Arial-bold, arial, sans-serif;
+        text-transform: uppercase;
+        font-size     : 10px;
+
+        .rank-wrapper {
+          display    : flex;
+          align-items: center;
+        }
+      }
+
+      .input-group {
+        display       : flex;
+        flex-direction: column;
+
+        textarea {
+          flex: 1;
+        }
       }
     }
   }

@@ -1,3 +1,17 @@
+@mixin track-hover($activeColor) {
+  &.active {
+    background: $activeColor;
+  }
+
+  &.hover-active {
+    background: $activeColor !important;
+  }
+
+  &.hover-inactive {
+    background: inherit !important;
+  }
+}
+
 .sheet.actor {
   min-width: 750px;
 
@@ -137,10 +151,6 @@
           &:not(:first-child) {
             border-top: none;
           }
-
-          &.hover {
-            background: #b9b9b9;
-          }
         }
       }
 
@@ -185,9 +195,7 @@
 
         .momentum-track {
           .block {
-            &.active {
-              background: #48ec48;
-            }
+            @include track-hover(#48ec48);
           }
         }
 
@@ -327,25 +335,19 @@
 
         .health-track {
           .block {
-            &.active {
-              background: #ec5151;
-            }
+            @include track-hover(#ec5151);
           }
         }
 
         .spirit-track {
           .block {
-            &.active {
-              background: #1cdad1;
-            }
+            @include track-hover(#1cdad1);
           }
         }
 
         .supply-track {
           .block {
-            &.active {
-              background: #dad71c;
-            }
+            @include track-hover(#dad71c);
           }
         }
       }

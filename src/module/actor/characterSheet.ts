@@ -225,22 +225,24 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       blocks.on('mouseover', evt => {
         const target = evt.currentTarget;
+        let isActive = true;
         revBlocks.each((idx, el) => {
-          $(el).addClass('hover');
+          $(el).addClass(isActive ? 'hover-active' : 'hover-inactive');
 
           if (el == target) {
-            return false;
+            isActive = false;
           }
         });
       });
 
       blocks.on('mouseout', evt => {
         const target = evt.currentTarget;
+        let isActive = true;
         revBlocks.each((idx, el) => {
-          $(el).removeClass('hover');
+          $(el).removeClass(isActive ? 'hover-active' : 'hover-inactive');
 
           if (el == target) {
-            return false;
+            isActive = false;
           }
         });
       });

@@ -34,6 +34,7 @@ export class IronswornCharacterSheet extends ActorSheet {
     return `systems/ironsworn/templates/actor/${type}-sheet.html`;
   }
 
+  ctrlDown: boolean = false;
   bondHoveredIdx: Number = -1;
   vowHoveredIdx: Number = -1;
   hoverCard: HTMLElement;
@@ -127,6 +128,18 @@ export class IronswornCharacterSheet extends ActorSheet {
   activateListeners(html: JQuery) {
     super.activateListeners(html);
 
+    $('body').on('keydown.character', evt => {
+      if (evt.key === 'Control') {
+        this.ctrlDown = true;
+      }
+    });
+
+    $('body').on('keyup.character', evt => {
+      if (this.ctrlDown && evt.key === 'Control') {
+        this.ctrlDown = false;
+      }
+    });
+
     const expLabel = html.find('.experience .label');
     expLabel.on('click', async (evt) => {
       await this.actor.update({
@@ -147,27 +160,37 @@ export class IronswornCharacterSheet extends ActorSheet {
 
     const expPips = html.find('.experience .pip');
     expPips.on('mouseover', evt => {
+      const { actor } = this;
+      const expEarned = actor.data.data.experience.earned;
+
       const target = evt.currentTarget;
       let isActive = true;
       expPips.each((idx, el) => {
-        $(el).find('.image').addClass(isActive ? 'earned-hover-active' : 'earned-hover-inactive');
+        if (!this.ctrlDown) {
+          $(el).find('.image').addClass(isActive ? 'earned-hover-active' : 'earned-hover-inactive');
+        } else if (idx < expEarned) {
+          // If we're trying to show used XP, we want to preserve the appearance of earned
+          // XP beneath the available used XP, so we use a bit of a "hack" to keep
+          // the look and feel consistent during the mouse over.
+          $(el).find('.image').addClass(isActive ? 'used-hover-active' : 'earned-hover-active');
+        }
 
         if (el == target) {
           isActive = false;
         }
       });
+
+      evt.stopPropagation();
     });
 
     expPips.on('mouseout', evt => {
-      const target = evt.currentTarget;
-      let isActive = true;
       expPips.each((idx, el) => {
-        $(el).find('.image').removeClass(isActive ? 'earned-hover-active' : 'earned-hover-inactive');
+        const img = $(el).find('.image');
 
-        if (el == target) {
-          isActive = false;
-        }
+        img.removeClass('used-hover-active used-hover-inactive earned-hover-active earned-hover-inactive');
       });
+
+      evt.stopPropagation();
     });
 
     expPips.on('click', async (evt) => {
@@ -178,30 +201,30 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       if (btn === 0) {
         const pipIdx = parseInt(target.dataset.idx);
-        const expUsed = actor.data.data.experience.used;
 
-        await actor.update({
-          // If the amount earned decreases and falls below the current
-          // amount used, match the used amount to the new earned amount
-          'data.experience.used': expUsed > pipIdx ? pipIdx : expUsed,
-          'data.experience.earned': pipIdx
-        });
+        // Set used XP if control is down
+        if (this.ctrlDown) {
+          const expEarned = actor.data.data.experience.earned;
+
+          // Don't let used exp exceed earned exp
+          const adjustedPipIdx = pipIdx > expEarned ? expEarned : pipIdx;
+
+          await this.actor.update({
+            'data.experience.used': adjustedPipIdx
+          });
+        } else {
+          // Otherwise, set earned XP
+          const expUsed = actor.data.data.experience.used;
+
+          await actor.update({
+            // If the amount earned decreases and falls below the current
+            // amount used, match the used amount to the new earned amount
+            'data.experience.used': expUsed > pipIdx ? pipIdx : expUsed,
+            'data.experience.earned': pipIdx
+          });
+        }
+
       }
-    });
-
-    expPips.on('contextmenu', async (evt) => {
-      const { actor } = this;
-
-      const target = evt.currentTarget;
-      const pipIdx = parseInt(target.dataset.idx);
-      const expEarned = actor.data.data.experience.earned;
-
-      // Don't let used exp exceed earned exp
-      const adjustedPipIdx = pipIdx > expEarned ? expEarned : pipIdx;
-
-      await this.actor.update({
-        'data.experience.used': adjustedPipIdx
-      });
     });
 
     // const progress = html.find('.progress');
@@ -509,5 +532,11 @@ export class IronswornCharacterSheet extends ActorSheet {
         this.render(true);
       }
     });
+  }
+
+  close(): Promise<void> {
+    $('body').off('.character');
+
+    return super.close();
   }
 }

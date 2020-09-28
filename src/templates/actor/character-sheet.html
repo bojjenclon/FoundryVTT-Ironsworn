@@ -111,7 +111,9 @@
 
         <ul class="vow-list">
           {{#each vows as |vow|}}
-          <li class="vow-item" data-idx="{{@index}}" data-vow-id="{{vow.id}}">{{vow.name}}</li>
+          <li class="vow-item">
+            <span data-idx="{{@index}}" data-vow-id="{{vow.id}}">{{vow.name}}</span>
+          </li>
           {{/each}}
         </ul>
       </section>

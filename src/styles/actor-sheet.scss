@@ -255,7 +255,7 @@
             padding-left: 4px;
 
             .vow-item {
-              &:hover {
+              >span:hover {
                 cursor: pointer;
                 color : #666666;
               }
@@ -268,6 +268,10 @@
             .pip {
               &.occupied {
                 background: #9c9c9c;
+
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -316,6 +320,10 @@
 
       .rhs {
         flex-basis: 10%;
+
+        .track:not(:last-child) {
+          margin-bottom: 9px;
+        }
 
         .health-track {
           .block {
@@ -378,10 +386,25 @@
       overflow     : hidden;
       text-overflow: ellipsis;
     }
+
+    hr {
+      flex : 0;
+      width: 100%;
+    }
   }
 
   .vow-card {
+    width : 250px;
+    height: 175px;
+
     .rank {
+      font-family: OPTILagoon, Arial-bold, arial, sans-serif;
+      font-size  : 10px;
+
+      text-transform: uppercase;
+    }
+
+    .progress-text {
       font-family: OPTILagoon, Arial-bold, arial, sans-serif;
       font-size  : 10px;
 

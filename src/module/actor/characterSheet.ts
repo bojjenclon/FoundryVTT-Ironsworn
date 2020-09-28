@@ -437,7 +437,7 @@ export class IronswornCharacterSheet extends ActorSheet {
       }, { renderSheet: true });
     });
 
-    const vowItems = html.find('.vows .vow-list .vow-item');
+    const vowItems = html.find('.vows .vow-list .vow-item > span');
     vowItems.on('click', async (evt) => {
       const { actor } = this;
       const target = evt.currentTarget;
@@ -466,10 +466,11 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       const position = $(target).position();
       const params = {
-        x: `${position.left - 50}px`,
+        x: `${position.left - 65}px`,
         y: `${position.top + 28}px`,
         name: vow.name,
         rank: Ironsworn.rank[vow.data.data.rank],
+        progress: `${vow.data.data.progress.value} / 10`,
         text: vow.data.data.description.value
       };
       const html = await renderTemplate('systems/ironsworn/templates/dialog/vow-card.html', params);

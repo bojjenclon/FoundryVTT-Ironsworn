@@ -1,0 +1,19 @@
+<form class="{{cssClass}} vow flexcol" autocomplete="off">
+  <header class="sheet-header">
+    <input class="name" type="text" name="item.name" value="{{item.name}}" data-dtype="String" />
+  </header>
+
+  <div class="sheet-body">
+    <div class="input-group">
+      <label for="description">Description</label>
+      <textarea id="description" class="description" name="data.description.value">{{data.description.value}}</textarea>
+    </div>
+
+    <div class="ranks">
+      {{#each ranks as |rank|}}
+        <input id="rank-{{rank}}" type="radio" {{checked (eq rank ../currentRank)}} data-rank-idx="{{@index}}" />
+        <label for="rank-{{rank}}">{{rank}}</label>
+      {{/each}}
+    </div>
+  </div>
+</form>

@@ -387,27 +387,28 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       if (btn === 0) {
         const { bondId } = target.dataset;
-        if (bondId && bondId.length > 0) {
-          const bond = actor.getOwnedItem(bondId);
-          bond.sheet.render(true);
+
+        if (this.ctrlDown) {
+          // If control is down and we have a valid bond,
+          // remove it from the actor.
+          // TODO: Confirmation dialog?
+          if (bondId && bondId.length > 0) {
+            actor.deleteOwnedItem(bondId);
+          }
         } else {
-          await actor.createOwnedItem({
-            name: 'New Bond',
-            type: 'bond',
-            data: {}
-          }, { renderSheet: true });
+          // If control isn't down, we either add a new bond,
+          // or open the existing one.
+          if (bondId && bondId.length > 0) {
+            const bond = actor.getOwnedItem(bondId);
+            bond.sheet.render(true);
+          } else {
+            await actor.createOwnedItem({
+              name: 'New Bond',
+              type: 'bond',
+              data: {}
+            }, { renderSheet: true });
+          }
         }
-      }
-    });
-
-    bondPips.on('contextmenu', async (evt) => {
-      const { actor } = this;
-
-      const target = evt.currentTarget;
-      const bond = target.dataset.bondId;
-
-      if (bond && bond.length > 0) {
-        actor.deleteOwnedItem(bond);
       }
     });
 

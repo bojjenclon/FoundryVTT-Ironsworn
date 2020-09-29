@@ -4,6 +4,7 @@ export const preloadTemplates = async function () {
 
 		"systems/ironsworn/templates/item/bond-sheet.html",
 		"systems/ironsworn/templates/item/vow-sheet.html",
+		"systems/ironsworn/templates/item/asset-sheet.html",
 
 		"systems/ironsworn/templates/dialog/bond-card.html",
 		"systems/ironsworn/templates/dialog/vow-card.html",

@@ -12,7 +12,7 @@
   }
 }
 
-.sheet.actor {
+&.sheet.actor {
   min-width: 750px;
 
   form {
@@ -79,14 +79,6 @@
 
                   @include active-hover(green, "earned-");
                   @include active-hover(#505050, "used-");
-
-                  // &.earned {
-                  //   background: green;
-                  // }
-
-                  // &.used {
-                  //   background: #505050;
-                  // }
                 }
               }
             }
@@ -244,6 +236,13 @@
             flex-basis: 20%;
 
             margin: 2px;
+
+            .label {
+              &:hover {
+                cursor: pointer;
+                color : #666666;
+              }
+            }
           }
         }
 

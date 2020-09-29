@@ -7,5 +7,9 @@
   "ironsworn.roll.stat": "##STAT## Roll",
   "ironsworn.roll.miss": "Miss",
   "ironsworn.roll.hit.weak": "Weak Hit",
-  "ironsworn.roll.hit.strong": "Strong Hit"
+  "ironsworn.roll.hit.strong": "Strong Hit",
+  "ironsworn.asset.type.companion": "Companion",
+  "ironsworn.asset.type.path": "Path",
+  "ironsworn.asset.type.combatTalent": "Combat Talent",
+  "ironsworn.asset.type.ritual": "Ritual"
 }

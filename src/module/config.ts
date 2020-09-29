@@ -21,5 +21,12 @@ export const Ironsworn = {
     'formidable',
     'extreme',
     'epic'
+  ],
+
+  pathType: [
+    'companion',
+    'path',
+    'combatTalent',
+    'ritual'
   ]
 };

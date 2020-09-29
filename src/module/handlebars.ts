@@ -25,6 +25,8 @@ export const registerHandlebars = () => {
     return `${sign}${val}`;
   });
 
+  Handlebars.registerHelper('concat', (v1, v2) => `${v1}${v2}`);
+
   Handlebars.registerHelper('add', (lhs, rhs) => {
     return parseInt(lhs) + rhs;
   });

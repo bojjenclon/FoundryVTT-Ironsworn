@@ -29,6 +29,8 @@
   font-style : normal;
 }
 
-@import 'styles/shared.scss';
-@import 'styles/actor-sheet.scss';
-@import 'styles/item-sheet.scss';
+.ironsworn {
+  @import 'styles/shared.scss';
+  @import 'styles/actor-sheet.scss';
+  @import 'styles/item-sheet.scss';
+}

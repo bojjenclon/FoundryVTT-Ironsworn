@@ -1,0 +1,39 @@
+<form class="{{cssClass}} asset flexcol" autocomplete="off">
+  <header class="sheet-header">
+    <select name="data.type.value" data-dtype="Number">
+      {{#select data.type.value}}
+      {{#each types}}
+      <option value="{{@index}}">{{localize (concat "ironsworn.asset.type." this)}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
+  </header>
+
+  <div class="sheet-body">
+    <input class="name" type="text" name="name" value="{{item.name}}" data-dtype="String" />
+
+    <div class="ability-list">
+      {{#each abilities as |ability|}}
+      <div class="ability" data-idx="{{@index}}">
+        <div class="ability-{{#unless ability.acquired}}not-{{/unless}}acquired"></div>
+        <div class="ability-desc">{{{ability.description}}}</div>
+        <div class="ability-edit"></div>
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="action-bar">
+      <button class="add-ability">Add Ability</button>
+    </div>
+  </div>
+
+  {{#if showEditor}}
+  <div class="ability-desc-editor">
+    <div class="actions">
+      <a class="close"><i class="fas fa-times"></i></a>
+    </div>
+
+    <textarea id="description" class="description" name="abilityText">{{editingAbilityText}}</textarea>
+  </div>
+  {{/if}}
+</form>

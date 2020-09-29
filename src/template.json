@@ -101,7 +101,8 @@
     "types": [
       "equipment",
       "vow",
-      "bond"
+      "bond",
+      "asset"
     ],
     "templates": {
       "common": {
@@ -133,6 +134,17 @@
       ],
       "description": {
         "value": ""
+      }
+    },
+    "asset": {
+      "templates": [
+        "common"
+      ],
+      "type": {
+        "value": 0
+      },
+      "abilities": {
+        "value": []
       }
     }
   }

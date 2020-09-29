@@ -12,18 +12,25 @@
     }
   ],
   "scripts": [],
-  "esmodules": ["ironsworn.js"],
-  "styles": ["ironsworn.css"],
+  "esmodules": [
+    "ironsworn.js"
+  ],
+  "styles": [
+    "ironsworn.css"
+  ],
   "packs": [],
-  "languages": [{
-    "lang": "en",
-    "name": "English",
-    "path": "lang/en.json"
-  }],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
   "gridDistance": 1,
   "gridUnits": "",
   "minimumCoreVersion": "0.6.0",
   "compatibleCoreVersion": "0.6.5",
+  "templateVersion": 2,
   "url": "",
   "manifest": "",
   "download": "",

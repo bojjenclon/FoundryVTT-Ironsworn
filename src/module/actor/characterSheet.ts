@@ -2,6 +2,8 @@ import { Ironsworn } from "../config";
 import { IronswornItem } from "../item/item";
 import { IronswornActor } from "./actor";
 
+const CHAT_ROLL_HTML = 'systems/ironsworn/templates/chat/stat-roll.html';
+
 export interface CharacterSheetData extends ActorSheetData {
   momentumTrack: Array<Number>;
   healthTrack: Array<Number>;
@@ -147,20 +149,28 @@ export class IronswornCharacterSheet extends ActorSheet {
       const stat = target.dataset.stat;
 
       const { actor } = this;
-      const roll = actor.rollStat(stat);
+      const rollResult = actor.rollStat(stat);
+      const rollString = rollResult.roll;
+      const rollSuccesses = rollResult.successes;
 
-      let chatContent = '';
-      if (roll === 0) {
-        chatContent = 'Failure';
-      } else if (roll == 1) {
-        chatContent = 'Partial Success';
+      let resultString = '';
+      if (rollSuccesses === 0) {
+        resultString = game.i18n.localize('ironsworn.roll.miss');
+      } else if (rollSuccesses == 1) {
+        resultString = game.i18n.localize('ironsworn.roll.hit.weak');
       } else {
-        chatContent = 'Full Success';
+        resultString = game.i18n.localize('ironsworn.roll.hit.strong');
       }
 
+      const chatContent = await renderTemplate(CHAT_ROLL_HTML, {
+        roll: rollString,
+        result: resultString
+      });
+
+      const statTranslation = game.i18n.localize(`ironsworn.stat.${stat}`);
       ChatMessage.create([{
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `${stat} Roll`,
+        flavor: game.i18n.localize('ironsworn.roll.stat').replace('##STAT##', statTranslation),
         content: chatContent,
       }]);
     });

@@ -6,21 +6,24 @@ export class IronswornActor extends Actor {
    * @param adds
    * @returns {Number} Number of successes
    */
-  rollStat(stat: string, adds : Number = 0) : Number {
+  rollStat(stat: string, adds: Number = 0): Object {
     const statVal = this.data.data.stats[stat].value;
-    
-    const roll = new Roll('1d6 + @stat + @adds', { stat: statVal, adds }).roll().result;
-    const check1 = new Roll('1d10').roll().result;
-    const check2 = new Roll('1d10').roll().result;
 
-    let success = 0;
-    if (roll < check1) {
-      success++;
+    const roll = new Roll('1d6 + @stat + @adds', { stat: statVal, adds }).roll();
+    const check1 = new Roll('1d10').roll();
+    const check2 = new Roll('1d10').roll();
+
+    let successes = 0;
+    if (roll.total < check1.total) {
+      successes++;
     }
-    if (roll < check2) {
-      success++;
+    if (roll.total < check2.total) {
+      successes++;
     }
 
-    return success;
+    return {
+      roll: `${roll.result} = ${roll.total} vs (${check1.result}, ${check2.result})`,
+      successes
+    };
   }
 }

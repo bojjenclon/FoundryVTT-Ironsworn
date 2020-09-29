@@ -1,5 +1,6 @@
 import { Ironsworn } from "../config";
 import { IronswornItem } from "../item/item";
+import { IronswornActor } from "./actor";
 
 export interface CharacterSheetData extends ActorSheetData {
   momentumTrack: Array<Number>;
@@ -128,6 +129,7 @@ export class IronswornCharacterSheet extends ActorSheet {
   activateListeners(html: JQuery) {
     super.activateListeners(html);
 
+    // Capture control key state
     $('body').on('keydown.character', evt => {
       if (evt.key === 'Control') {
         this.ctrlDown = true;
@@ -138,6 +140,29 @@ export class IronswornCharacterSheet extends ActorSheet {
       if (this.ctrlDown && evt.key === 'Control') {
         this.ctrlDown = false;
       }
+    });
+
+    html.find('.stat .label').on('click', async (evt) => {
+      const target = evt.currentTarget;
+      const stat = target.dataset.stat;
+
+      const { actor } = this;
+      const roll = actor.rollStat(stat);
+
+      let chatContent = '';
+      if (roll === 0) {
+        chatContent = 'Failure';
+      } else if (roll == 1) {
+        chatContent = 'Partial Success';
+      } else {
+        chatContent = 'Full Success';
+      }
+
+      ChatMessage.create([{
+        speaker: ChatMessage.getSpeaker({ actor }),
+        flavor: `${stat} Roll`,
+        content: chatContent,
+      }]);
     });
 
     const expLabel = html.find('.experience .label');

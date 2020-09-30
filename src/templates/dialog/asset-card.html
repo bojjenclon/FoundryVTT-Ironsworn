@@ -1,0 +1,15 @@
+<div class="asset-card" style="left: {{x}}; top: {{y}}">
+  <div class="type">{{type}}</div>
+  <div class="card-body">
+    <div class="name">{{name}}</div>
+    <hr>
+    <div class="ability-list">
+      {{#each abilities as |ability|}}
+      <div class="ability" data-idx="{{@index}}">
+        <div class="ability-{{#unless ability.acquired}}not-{{/unless}}acquired"></div>
+        <div class="ability-desc">{{{ability.description}}}</div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

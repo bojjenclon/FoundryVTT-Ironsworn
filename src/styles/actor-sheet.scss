@@ -271,6 +271,31 @@
           }
         }
 
+        .assets {
+          .lined-header {
+            .text {
+              &:hover {
+                cursor: pointer;
+                color : #666666;
+              }
+            }
+          }
+
+          .asset-list {
+            list-style: none;
+
+            padding-left : 4px;
+            margin-bottom: 0;
+
+            .asset-item {
+              >span:hover {
+                cursor: pointer;
+                color : #666666;
+              }
+            }
+          }
+        }
+
         .bonds {
           .progress {
             .pip {
@@ -355,7 +380,8 @@
   }
 
   .bond-card,
-  .vow-card {
+  .vow-card,
+  .asset-card {
     position: absolute;
     top     : 0;
     left    : 0;
@@ -411,6 +437,99 @@
       font-size  : 10px;
 
       text-transform: uppercase;
+    }
+  }
+
+  .asset-card {
+    width : 250px;
+    height: 175px;
+
+    padding: 0;
+
+    .type {
+      width  : 100%;
+      margin : 0;
+      padding: 2px;
+
+      background: #505050;
+      color     : white;
+
+      font-family   : OPTILagoon, Arial-bold, arial, sans-serif;
+      font-size     : 12px;
+      text-transform: uppercase;
+    }
+
+    .card-body {
+      padding: 6px;
+
+      .ability-list {
+        flex: 1;
+
+        overflow: auto;
+
+        margin : 2px 0;
+        padding: 0 2px;
+
+        .ability {
+          display       : flex;
+          flex-direction: row;
+          align-items   : baseline;
+
+          &:not(:last-child) {
+            margin-bottom: 4px;
+          }
+
+          .ability-acquired,
+          .ability-not-acquired {
+            width : 6px;
+            height: 6px;
+
+            align-self: center;
+
+            border       : 1px solid black;
+            border-radius: 7px;
+
+            margin-right: 4px;
+
+            &:hover {
+              background: black;
+              cursor    : pointer;
+            }
+          }
+
+          .ability-acquired {
+            background: black;
+
+            &:hover {
+              background: none;
+              cursor    : pointer;
+            }
+          }
+
+          .ability-desc {
+            flex: 1;
+
+            margin-right: 1em;
+
+            p {
+              margin: 0;
+            }
+
+            ul {
+              list-style: none;
+
+              margin      : 0.25em 0;
+              padding     : 0;
+              padding-left: 6px;
+
+              li {
+                background  : url("assets/ui/chevron-right.png") no-repeat left 2px;
+                padding-left: 14px;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

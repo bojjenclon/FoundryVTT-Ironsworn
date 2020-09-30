@@ -19,6 +19,7 @@ export interface CharacterSheetData extends ActorSheetData {
 
   bonds: Array<Object>;
   vows: Array<Object>;
+  assets: Array<Object>;
 
   hoverCard: HTMLElement;
 }
@@ -40,6 +41,7 @@ export class IronswornCharacterSheet extends ActorSheet {
   ctrlDown: boolean = false;
   bondHoveredIdx: Number = -1;
   vowHoveredIdx: Number = -1;
+  assetHoveredIdx: Number = -1;
   hoverCard: HTMLElement;
 
   getData(): CharacterSheetData {
@@ -118,10 +120,18 @@ export class IronswornCharacterSheet extends ActorSheet {
     // Vows
     const vows = [];
     const actorVows = actor.itemTypes['vow'] || [];
-    actorVows.forEach(async (bond, idx) => {
-      vows[idx] = bond;
+    actorVows.forEach(async (vow, idx) => {
+      vows[idx] = vow;
     });
     data.vows = vows;
+
+    // Vows
+    const assets = [];
+    const actorAssets = actor.itemTypes['asset'] || [];
+    actorAssets.forEach(async (asset, idx) => {
+      assets[idx] = asset;
+    });
+    data.assets = assets;
 
     data.hoverCard = this.hoverCard;
 
@@ -502,6 +512,7 @@ export class IronswornCharacterSheet extends ActorSheet {
       }
     });
 
+    // Vows
     const vowsHeader = html.find('.vows .lined-header .text');
     vowsHeader.on('click', async (evt) => {
       const { actor } = this;
@@ -562,6 +573,82 @@ export class IronswornCharacterSheet extends ActorSheet {
       // Hide hover card
       if (this.hoverCard) {
         this.vowHoveredIdx = -1;
+        delete this.hoverCard;
+
+        await this._onSubmit(evt);
+        this.render(true);
+      }
+    });
+
+    // Assets
+    const assetsHeader = html.find('.assets .lined-header .text');
+    assetsHeader.on('click', async (evt) => {
+      const { actor } = this;
+
+      await actor.createOwnedItem({
+        name: 'New Asset',
+        type: 'asset',
+        data: {}
+      }, { renderSheet: true });
+    });
+
+    const assetItems = html.find('.assets .asset-list .asset-item > span');
+    assetItems.on('click', async (evt) => {
+      const { actor } = this;
+      const target = evt.currentTarget;
+
+      const asset = await actor.getOwnedItem(target.dataset.assetId);
+      asset.sheet.render(true);
+    });
+
+    assetItems.on('mouseover', async (evt) => {
+      evt.stopPropagation();
+
+      const { actor } = this;
+
+      const target = evt.currentTarget;
+      const { assetId } = target.dataset;
+      const idx = parseInt(target.dataset.idx);
+
+      // If we have a bond, show its info card
+      if (this.assetHoveredIdx === idx) {
+        return;
+      }
+
+      const asset = actor.getOwnedItem(assetId);
+
+      this.assetHoveredIdx = idx;
+
+      const position = $(target).position();
+      const abilities = asset.data.data.abilities.value.map((ability) => {
+        return {
+          ...ability,
+
+          description: asset.assetAbilityHtml(ability)
+        };
+      });
+
+      const pathType = Ironsworn.pathType[asset.data.data.type.value];
+      const params = {
+        x: `${position.left - 65}px`,
+        y: `${position.top + 28}px`,
+        name: asset.name,
+        type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
+        abilities: abilities
+      };
+      const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
+      this.hoverCard = html;
+
+      await this._onSubmit(evt);
+      this.render(true);
+    });
+
+    assetItems.on('mouseout', async (evt) => {
+      evt.stopPropagation();
+
+      // Hide hover card
+      if (this.hoverCard) {
+        this.assetHoveredIdx = -1;
         delete this.hoverCard;
 
         await this._onSubmit(evt);

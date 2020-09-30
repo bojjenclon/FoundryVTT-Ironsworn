@@ -118,6 +118,22 @@
         </ul>
       </section>
 
+      <section class="assets">
+        <div class="lined-header">
+          <div class="line"></div>
+          <div class="text">Assets</div>
+          <div class="line"></div>
+        </div>
+
+        <ul class="asset-list">
+          {{#each assets as |asset|}}
+          <li class="asset-item">
+            <span data-idx="{{@index}}" data-asset-id="{{asset.id}}">{{asset.name}}</span>
+          </li>
+          {{/each}}
+        </ul>
+      </section>
+
       <section class="debilities">
         <div class="lined-header">
           <div class="line"></div>

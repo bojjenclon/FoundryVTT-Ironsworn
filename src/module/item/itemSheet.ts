@@ -284,7 +284,8 @@ export class IronswornItemSheet extends ItemSheet {
       const abilities = duplicate(item.data.data.abilities.value ?? []);
 
       abilities.push({
-        acquired: false,
+        // The first ability is usually automatically acquired
+        acquired: abilities.length === 0,
         description: 'Ability Text'
       });
 

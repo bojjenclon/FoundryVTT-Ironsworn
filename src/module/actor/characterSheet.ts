@@ -534,6 +534,16 @@ export class IronswornCharacterSheet extends ActorSheet {
       vow.sheet.render(true);
     });
 
+    vowItems.on('contextmenu', async (evt) => {
+      const { actor } = this;
+      const target = evt.currentTarget;
+
+      this.vowHoveredIdx = -1;
+      delete this.hoverCard;
+
+      await actor.deleteOwnedItem(target.dataset.vowId);
+    });
+
     vowItems.on('mouseover', async (evt) => {
       evt.stopPropagation();
 
@@ -601,6 +611,16 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       const asset = await actor.getOwnedItem(target.dataset.assetId);
       asset.sheet.render(true);
+    });
+
+    assetItems.on('contextmenu', async (evt) => {
+      const { actor } = this;
+      const target = evt.currentTarget;
+
+      this.assetHoveredIdx = -1;
+      delete this.hoverCard;
+
+      await actor.deleteOwnedItem(target.dataset.assetId);
     });
 
     assetItems.on('mouseover', async (evt) => {

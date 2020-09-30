@@ -166,6 +166,10 @@ export class IronswornItemSheet extends ItemSheet {
     });
   }
 
+  caretPosition: number = 0;
+  isBlurred: boolean = false;
+  keyUpTimeout: number;
+
   _assetListeners(html: JQuery) {
     const window = html.closest('.window-app');
     window.addClass('asset');
@@ -188,38 +192,65 @@ export class IronswornItemSheet extends ItemSheet {
       this.render(true);
     };
 
-    const setupEditor = () => {
-      let keyUpTimeout;
+    const closeEditor = async (evt) => {
+      const { item } = this;
+      const abilities = duplicate(item.data.data.abilities.value ?? []);
 
-      descEditor.find('textarea').on('keyup.editor', async (evt) => {
-        const target = evt.currentTarget as HTMLTextAreaElement;
-        const text = target.value;
+      abilities[this.editingAbilityIdx].description = this.editingAbilityText;
+
+      this.showEditor = false;
+      this.editingAbilityIdx = -1;
+      delete this.editingAbilityText;
+
+      $(document).off('.editor');
+      descEditor.off('.editor');
+
+      await item.update({
+        ['data.abilities.value']: abilities
+      });
+
+      await this._onSubmit(evt);
+    };
+
+    const setupEditor = () => {
+      const textArea = descEditor.find('textarea');
+
+      $(document).off('.editor');
+      descEditor.off('.editor');
+
+      $(document).on('keydown.editor', async (evt) => {
+        if (this.keyUpTimeout) {
+          clearTimeout(this.keyUpTimeout);
+        }
+
+        if (this.isBlurred) {
+          this.isBlurred = false;
+          textArea.trigger('focus');
+          textArea.prop('selectionStart', this.caretPosition);
+          textArea.prop('selectionEnd', this.caretPosition);
+        }
+      });
+
+      textArea.on('keyup.editor', async (evt) => {
+        if (evt.key === 'Escape') {
+          closeEditor(evt);
+          return;
+        }
+
+        const text = textArea.val() as string;
 
         this.editingAbilityText = text;
 
-        clearTimeout(keyUpTimeout);
-        keyUpTimeout = setTimeout(() => {
-          target.blur();
+        clearTimeout(this.keyUpTimeout);
+        this.keyUpTimeout = setTimeout(() => {
+          this.isBlurred = true;
+          this.caretPosition = textArea.prop('selectionEnd');
+          textArea.trigger('blur');
         }, 750);
       });
 
       descEditor.find('.actions .close').on('click.editor', async (evt) => {
-        const { item } = this;
-        const abilities = duplicate(item.data.data.abilities.value ?? []);
-
-        abilities[this.editingAbilityIdx].description = this.editingAbilityText;
-
-        this.showEditor = false;
-        this.editingAbilityIdx = -1;
-        delete this.editingAbilityText;
-
-        descEditor.off('.editor');
-
-        await item.update({
-          ['data.abilities.value']: abilities
-        });
-
-        await this._onSubmit(evt);
+        closeEditor(evt);
       });
     };
 
@@ -253,7 +284,7 @@ export class IronswornItemSheet extends ItemSheet {
     html.find('.add-ability').on('click', async (evt) => {
       const { item } = this;
       const abilities = duplicate(item.data.data.abilities.value ?? []);
-      
+
       abilities.push({
         acquired: false,
         description: 'Ability Text'

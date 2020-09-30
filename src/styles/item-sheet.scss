@@ -10,8 +10,8 @@
   }
 
   &.asset {
-    min-width : 350px;
-    min-height: 300px;
+    min-width : 400px;
+    min-height: 350px;
 
     .window-content {
       padding: 0 !important;
@@ -101,23 +101,37 @@
               ul {
                 list-style: none;
 
-                margin: 0.25em 0;
-                padding: 0;
+                margin      : 0.25em 0;
+                padding     : 0;
                 padding-left: 6px;
 
                 li {
-                  background: url("assets/ui/chevron-right.png") no-repeat left 2px;
+                  background  : url("assets/ui/chevron-right.png") no-repeat left 2px;
                   padding-left: 14px;
                 }
               }
             }
 
             .ability-edit {
-              width     : 10px;
-              height    : 10px;
+              width     : 16px;
+              height    : 16px;
+              text-align: center;
+
+              margin-left : 2px;
+              margin-right: 2px;
 
               &:hover {
-                cursor    : pointer;
+                cursor: pointer;
+              }
+            }
+
+            .ability-delete {
+              width     : 16px;
+              height    : 16px;
+              text-align: center;
+
+              &:hover {
+                cursor: pointer;
               }
             }
           }

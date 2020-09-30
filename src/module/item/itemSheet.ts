@@ -249,6 +249,12 @@ export class IronswornItemSheet extends ItemSheet {
         }, 750);
       });
 
+      textArea.on('mouseup.editor', async (evt) => {
+        clearTimeout(this.keyUpTimeout);
+
+        this.caretPosition = textArea.prop('selectionEnd');
+      });
+
       descEditor.find('.actions .close').on('click.editor', async (evt) => {
         closeEditor(evt);
       });
@@ -279,6 +285,21 @@ export class IronswornItemSheet extends ItemSheet {
       this.editingAbilityText = ability.description;
 
       this.render(true);
+    });
+
+    html.find('.ability-delete').on('click', async (evt) => {
+      const { item } = this;
+      const abilities = duplicate(item.data.data.abilities.value ?? []);
+
+      const target = evt.currentTarget;
+      const abilityEl = target.parentElement;
+      const abilityIdx = parseInt(abilityEl.dataset.idx);
+
+      abilities.splice(abilityIdx, 1);
+
+      await item.update({
+        ['data.abilities.value']: abilities
+      });
     });
 
     html.find('.add-ability').on('click', async (evt) => {

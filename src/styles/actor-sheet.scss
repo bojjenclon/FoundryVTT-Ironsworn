@@ -461,10 +461,10 @@
     .card-body {
       padding: 6px;
 
+      overflow: hidden;
+
       .ability-list {
         flex: 1;
-
-        overflow: auto;
 
         margin : 2px 0;
         padding: 0 2px;
@@ -472,7 +472,6 @@
         .ability {
           display       : flex;
           flex-direction: row;
-          align-items   : baseline;
 
           &:not(:last-child) {
             margin-bottom: 4px;
@@ -480,10 +479,11 @@
 
           .ability-acquired,
           .ability-not-acquired {
+            position: relative;
+
+            top   : 4px;
             width : 6px;
             height: 6px;
-
-            align-self: center;
 
             border       : 1px solid black;
             border-radius: 7px;

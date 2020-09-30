@@ -69,7 +69,6 @@
           .ability {
             display       : flex;
             flex-direction: row;
-            align-items   : baseline;
 
             &:not(:last-child) {
               margin-bottom: 4px;
@@ -77,10 +76,11 @@
 
             .ability-acquired,
             .ability-not-acquired {
+              position: relative;
+
+              top   : 3px;
               width : 10px;
               height: 10px;
-
-              align-self: center;
 
               border       : 1px solid black;
               border-radius: 7px;

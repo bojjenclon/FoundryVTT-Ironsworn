@@ -435,19 +435,19 @@ export class IronswornCharacterSheet extends ActorSheet {
     });
 
     bondPips.on('mouseover', async (evt) => {
+      evt.stopPropagation();
+
       clearTimeout(this.hoverTimeout);
 
-      this.hoverTimeout = setTimeout(async () => {
-        evt.stopPropagation();
+      const target = evt.currentTarget;
+      const { bondId } = target.dataset;
+      const idx = parseInt(target.dataset.idx);
 
-        const { actor } = this;
+      // If we have a bond, show its info card
+      if (bondId && bondId.length > 0) {
+        this.hoverTimeout = setTimeout(async () => {
+          const { actor } = this;
 
-        const target = evt.currentTarget;
-        const { bondId } = target.dataset;
-        const idx = parseInt(target.dataset.idx);
-
-        // If we have a bond, show its info card
-        if (bondId && bondId.length > 0) {
           if (this.bondHoveredIdx === idx) {
             return;
           }
@@ -468,12 +468,12 @@ export class IronswornCharacterSheet extends ActorSheet {
 
           await this._onSubmit(evt);
           this.render(true);
-        } else {
-          // Otherwise, highlight the next bond square to be filled
-          const highlightedPip = html.find('.bonds .pip:not(.occupied)').first();
-          highlightedPip.addClass('hover');
-        }
-      }, 500);
+        }, 500);
+      } else {
+        // Otherwise, highlight the next bond square to be filled
+        const highlightedPip = html.find('.bonds .pip:not(.occupied)').first();
+        highlightedPip.addClass('hover');
+      }
     });
 
     bondPips.on('mouseout', async (evt) => {

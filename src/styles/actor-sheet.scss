@@ -263,6 +263,10 @@
             margin-bottom: 0;
 
             .vow-item {
+              &:not(:last-child) {
+                margin-bottom: 4px;
+              }
+
               >span:hover {
                 cursor: pointer;
                 color : #666666;
@@ -288,6 +292,10 @@
             margin-bottom: 0;
 
             .asset-item {
+              &:not(:last-child) {
+                margin-bottom: 4px;
+              }
+
               >span:hover {
                 cursor: pointer;
                 color : #666666;

@@ -39,9 +39,10 @@ export class IronswornCharacterSheet extends ActorSheet {
   }
 
   ctrlDown: boolean = false;
-  bondHoveredIdx: Number = -1;
-  vowHoveredIdx: Number = -1;
-  assetHoveredIdx: Number = -1;
+  bondHoveredIdx: number = -1;
+  vowHoveredIdx: number = -1;
+  assetHoveredIdx: number = -1;
+  assetAbilityIdx: number = 0;
   hoverCard: HTMLElement;
 
   getData(): CharacterSheetData {
@@ -271,33 +272,6 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       }
     });
-
-    // const progress = html.find('.progress');
-    // progress.each((idx, el) => {
-    //   var pips = $(el).find('.pip');
-
-    //   pips.on('mouseover', evt => {
-    //     const target = evt.currentTarget;
-    //     pips.each((idx, el) => {
-    //       $(el).addClass('hover');
-
-    //       if (el == target) {
-    //         return false;
-    //       }
-    //     });
-    //   });
-
-    //   pips.on('mouseout', evt => {
-    //     const target = evt.currentTarget;
-    //     pips.each((idx, el) => {
-    //       $(el).removeClass('hover');
-
-    //       if (el == target) {
-    //         return false;
-    //       }
-    //     });
-    //   });
-    // });
 
     const tracks = html.find('.track');
     tracks.each((idx, el) => {
@@ -636,7 +610,7 @@ export class IronswornCharacterSheet extends ActorSheet {
       const { assetId } = target.dataset;
       const idx = parseInt(target.dataset.idx);
 
-      // If we have a bond, show its info card
+      // If we're not on this asset already, show its info card
       if (this.assetHoveredIdx === idx) {
         return;
       }
@@ -644,14 +618,11 @@ export class IronswornCharacterSheet extends ActorSheet {
       const asset = actor.getOwnedItem(assetId);
 
       this.assetHoveredIdx = idx;
+      this.assetAbilityIdx = 0;
 
-      const abilities = asset.data.data.abilities.value.map((ability) => {
-        return {
-          ...ability,
-
-          description: asset.assetAbilityHtml(ability)
-        };
-      });
+      const abilities = asset.data.data.abilities.value;
+      const ability = abilities[this.assetAbilityIdx];
+      const abilityHtml = ability ? asset.assetAbilityHtml(ability) : '';
       const pathType = Ironsworn.pathType[asset.data.data.type.value];
 
       const position = $(target).position();
@@ -665,7 +636,8 @@ export class IronswornCharacterSheet extends ActorSheet {
         y: `${mousepos.top - 4}px`,
         name: asset.name,
         type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
-        abilities: abilities
+        acquired: ability && ability.acquired,
+        ability: abilityHtml
       };
       const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
       this.hoverCard = html;
@@ -705,15 +677,65 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       const cardEl = $('.hover-card');
 
-      cardEl.off('.ironsworn');
+      cardEl.off('.character');
 
-      cardEl.on('mouseleave.ironsworn', async (evt) => {
+      cardEl.trigger('focus');
+
+      cardEl.on('mouseleave.character', async (evt) => {
         await dismissCard(evt);
       });
 
-      cardEl.on('contextmenu.ironsworn', async (evt) => {
+      cardEl.on('contextmenu.character', async (evt) => {
         await dismissCard(evt);
       });
+
+      if (this.assetHoveredIdx > -1) {
+        const abilityScroll = async (evt) => {
+          evt.preventDefault();
+
+          const wheelEvt = evt.originalEvent as WheelEvent;
+
+          const assetEl = assetItems[this.assetHoveredIdx];
+          const { assetId } = assetEl.dataset;
+
+          const { actor } = this;
+          const asset = actor.getOwnedItem(assetId);
+          const abilities = asset.data.data.abilities.value;
+
+          const mod = Math.sign(wheelEvt.deltaY);
+          this.assetAbilityIdx = this.assetAbilityIdx + mod;
+          if (this.assetAbilityIdx >= abilities.length) {
+            this.assetAbilityIdx = 0;
+          } else if (this.assetAbilityIdx < 0) {
+            this.assetAbilityIdx = abilities.length - 1;
+          }
+
+          const ability = abilities[this.assetAbilityIdx];
+          const abilityHtml = ability ? asset.assetAbilityHtml(ability) : '';
+          const pathType = Ironsworn.pathType[asset.data.data.type.value];
+
+          const position = cardEl.position();
+          const params = {
+            x: `${position.left}px`,
+            y: `${position.top}px`,
+            name: asset.name,
+            type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
+            acquired: ability && ability.acquired,
+            ability: abilityHtml
+          };
+          const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
+          this.hoverCard = html;
+
+          await this._onSubmit(evt);
+          this.render(true);
+        };
+
+        cardEl.on('wheel', async (evt) => {
+          if (this.ctrlDown) {
+            await abilityScroll(evt);
+          }
+        });
+      }
     }
   }
 

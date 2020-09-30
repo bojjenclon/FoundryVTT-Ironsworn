@@ -498,9 +498,10 @@ export class IronswornCharacterSheet extends ActorSheet {
     bondPips.on('mouseout', async (evt) => {
       evt.stopPropagation();
 
+      this.bondHoveredIdx = -1;
+
       // Hide hover card
       if (this.hoverCard) {
-        this.bondHoveredIdx = -1;
         delete this.hoverCard;
 
         await this._onSubmit(evt);
@@ -570,9 +571,10 @@ export class IronswornCharacterSheet extends ActorSheet {
     vowItems.on('mouseout', async (evt) => {
       evt.stopPropagation();
 
+      this.vowHoveredIdx = -1;
+
       // Hide hover card
       if (this.hoverCard) {
-        this.vowHoveredIdx = -1;
         delete this.hoverCard;
 
         await this._onSubmit(evt);
@@ -646,15 +648,30 @@ export class IronswornCharacterSheet extends ActorSheet {
     assetItems.on('mouseout', async (evt) => {
       evt.stopPropagation();
 
+      this.assetHoveredIdx = -1;
+
       // Hide hover card
       if (this.hoverCard) {
-        this.assetHoveredIdx = -1;
         delete this.hoverCard;
 
         await this._onSubmit(evt);
         this.render(true);
       }
     });
+
+    // Make sure hover cards don't get "stuck"
+    if (this.hoverCard) {
+      $('.hover-card').on('mouseover', async (evt) => {
+        this.bondHoveredIdx = -1;
+        this.vowHoveredIdx = -1;
+        this.assetHoveredIdx = -1;
+
+        delete this.hoverCard;
+
+        await this._onSubmit(evt);
+        this.render(true);
+      });
+    }
   }
 
   close(): Promise<void> {

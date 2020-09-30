@@ -690,7 +690,7 @@ export class IronswornCharacterSheet extends ActorSheet {
 
     // Remove hover cards when the mouse leaves them
     if (this.hoverCard) {
-      $('.hover-card').on('mouseleave', async (evt) => {
+      const dismissCard = async (evt) => {
         evt.stopPropagation();
 
         this.bondHoveredIdx = -1;
@@ -701,6 +701,18 @@ export class IronswornCharacterSheet extends ActorSheet {
 
         await this._onSubmit(evt);
         this.render(true);
+      };
+
+      const cardEl = $('.hover-card');
+
+      cardEl.off('.ironsworn');
+
+      cardEl.on('mouseleave.ironsworn', async (evt) => {
+        await dismissCard(evt);
+      });
+
+      cardEl.on('contextmenu.ironsworn', async (evt) => {
+        await dismissCard(evt);
       });
     }
   }

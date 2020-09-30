@@ -39,10 +39,13 @@ export class IronswornCharacterSheet extends ActorSheet {
   }
 
   ctrlDown: boolean = false;
+
   bondHoveredIdx: number = -1;
   vowHoveredIdx: number = -1;
   assetHoveredIdx: number = -1;
   assetAbilityIdx: number = 0;
+
+  hoverTimeout: number;
   hoverCard: HTMLElement;
 
   getData(): CharacterSheetData {
@@ -432,45 +435,51 @@ export class IronswornCharacterSheet extends ActorSheet {
     });
 
     bondPips.on('mouseover', async (evt) => {
-      evt.stopPropagation();
+      clearTimeout(this.hoverTimeout);
 
-      const { actor } = this;
+      this.hoverTimeout = setTimeout(async () => {
+        evt.stopPropagation();
 
-      const target = evt.currentTarget;
-      const { bondId } = target.dataset;
-      const idx = parseInt(target.dataset.idx);
+        const { actor } = this;
 
-      // If we have a bond, show its info card
-      if (bondId && bondId.length > 0) {
-        if (this.bondHoveredIdx === idx) {
-          return;
+        const target = evt.currentTarget;
+        const { bondId } = target.dataset;
+        const idx = parseInt(target.dataset.idx);
+
+        // If we have a bond, show its info card
+        if (bondId && bondId.length > 0) {
+          if (this.bondHoveredIdx === idx) {
+            return;
+          }
+
+          const bond = actor.getOwnedItem(bondId);
+
+          this.bondHoveredIdx = idx;
+
+          const position = $(target).position();
+          const params = {
+            x: `${position.left - 100 + evt.offsetX}px`,
+            y: `${position.top}px`,
+            name: bond.name,
+            text: bond.data.data.description.value
+          };
+          const html = await renderTemplate('systems/ironsworn/templates/dialog/bond-card.html', params);
+          this.hoverCard = html;
+
+          await this._onSubmit(evt);
+          this.render(true);
+        } else {
+          // Otherwise, highlight the next bond square to be filled
+          const highlightedPip = html.find('.bonds .pip:not(.occupied)').first();
+          highlightedPip.addClass('hover');
         }
-
-        const bond = actor.getOwnedItem(bondId);
-
-        this.bondHoveredIdx = idx;
-
-        const position = $(target).position();
-        const params = {
-          x: `${position.left - 80}px`,
-          y: `${position.top + 28}px`,
-          name: bond.name,
-          text: bond.data.data.description.value
-        };
-        const html = await renderTemplate('systems/ironsworn/templates/dialog/bond-card.html', params);
-        this.hoverCard = html;
-
-        await this._onSubmit(evt);
-        this.render(true);
-      } else {
-        // Otherwise, highlight the next bond square to be filled
-        const highlightedPip = html.find('.bonds .pip:not(.occupied)').first();
-        highlightedPip.addClass('hover');
-      }
+      }, 500);
     });
 
     bondPips.on('mouseout', async (evt) => {
       evt.stopPropagation();
+
+      clearTimeout(this.hoverTimeout);
 
       this.bondHoveredIdx = -1;
 
@@ -519,45 +528,47 @@ export class IronswornCharacterSheet extends ActorSheet {
     });
 
     vowItems.on('mouseover', async (evt) => {
-      evt.stopPropagation();
+      clearTimeout(this.hoverTimeout);
 
-      const { actor } = this;
+      this.hoverTimeout = setTimeout(async () => {
+        evt.stopPropagation();
 
-      const target = evt.currentTarget;
-      const { vowId } = target.dataset;
-      const idx = parseInt(target.dataset.idx);
+        const { actor } = this;
 
-      // If we have a bond, show its info card
-      if (this.vowHoveredIdx === idx) {
-        return;
-      }
+        const target = evt.currentTarget;
+        const { vowId } = target.dataset;
+        const idx = parseInt(target.dataset.idx);
 
-      const vow = actor.getOwnedItem(vowId);
+        // If we have a bond, show its info card
+        if (this.vowHoveredIdx === idx) {
+          return;
+        }
 
-      this.vowHoveredIdx = idx;
+        const vow = actor.getOwnedItem(vowId);
 
-      const position = $(target).position();
-      const mousepos = {
-        top: position.top,
-        left: evt.clientX - $(target).offset().left
-      };
-      const params = {
-        x: `${mousepos.left - 18}px`,
-        y: `${mousepos.top - 4}px`,
-        name: vow.name,
-        rank: Ironsworn.rank[vow.data.data.rank],
-        progress: `${vow.data.data.progress.value} / 10`,
-        text: vow.data.data.description.value
-      };
-      const html = await renderTemplate('systems/ironsworn/templates/dialog/vow-card.html', params);
-      this.hoverCard = html;
+        this.vowHoveredIdx = idx;
 
-      await this._onSubmit(evt);
-      this.render(true);
+        const position = $(target).position();
+        const params = {
+          x: `${position.left - 125 + evt.offsetX}px`,
+          y: `${position.top}px`,
+          name: vow.name,
+          rank: Ironsworn.rank[vow.data.data.rank],
+          progress: `${vow.data.data.progress.value} / 10`,
+          text: vow.data.data.description.value
+        };
+        const html = await renderTemplate('systems/ironsworn/templates/dialog/vow-card.html', params);
+        this.hoverCard = html;
+
+        await this._onSubmit(evt);
+        this.render(true);
+      }, 500);
     });
 
     vowItems.on('mouseout', async (evt) => {
       evt.stopPropagation();
+
+      clearTimeout(this.hoverTimeout);
 
       this.vowHoveredIdx = -1;
 
@@ -602,52 +613,53 @@ export class IronswornCharacterSheet extends ActorSheet {
     });
 
     assetItems.on('mouseover', async (evt) => {
-      evt.stopPropagation();
+      clearTimeout(this.hoverTimeout);
 
-      const { actor } = this;
+      this.hoverTimeout = setTimeout(async () => {
+        evt.stopPropagation();
 
-      const target = evt.currentTarget;
-      const { assetId } = target.dataset;
-      const idx = parseInt(target.dataset.idx);
+        const { actor } = this;
 
-      // If we're not on this asset already, show its info card
-      if (this.assetHoveredIdx === idx) {
-        return;
-      }
+        const target = evt.currentTarget;
+        const { assetId } = target.dataset;
+        const idx = parseInt(target.dataset.idx);
 
-      const asset = actor.getOwnedItem(assetId);
+        // If we're not on this asset already, show its info card
+        if (this.assetHoveredIdx === idx) {
+          return;
+        }
 
-      this.assetHoveredIdx = idx;
-      this.assetAbilityIdx = 0;
+        const asset = actor.getOwnedItem(assetId);
 
-      const abilities = asset.data.data.abilities.value;
-      const ability = abilities[this.assetAbilityIdx];
-      const abilityHtml = ability ? asset.assetAbilityHtml(ability) : '';
-      const pathType = Ironsworn.pathType[asset.data.data.type.value];
+        this.assetHoveredIdx = idx;
+        this.assetAbilityIdx = 0;
 
-      const position = $(target).position();
-      const mousepos = {
-        top: position.top,
-        left: evt.clientX - $(target).offset().left
-      };
+        const abilities = asset.data.data.abilities.value;
+        const ability = abilities[this.assetAbilityIdx];
+        const abilityHtml = ability ? asset.assetAbilityHtml(ability) : '';
+        const pathType = Ironsworn.pathType[asset.data.data.type.value];
 
-      const params = {
-        x: `${mousepos.left - 22}px`,
-        y: `${mousepos.top - 4}px`,
-        name: asset.name,
-        type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
-        acquired: ability && ability.acquired,
-        ability: abilityHtml
-      };
-      const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
-      this.hoverCard = html;
+        const position = $(target).position();
+        const params = {
+          x: `${position.left - 125 + evt.offsetX}px`,
+          y: `${position.top - 4}px`,
+          name: asset.name,
+          type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
+          acquired: ability && ability.acquired,
+          ability: abilityHtml
+        };
+        const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
+        this.hoverCard = html;
 
-      await this._onSubmit(evt);
-      this.render(true);
+        await this._onSubmit(evt);
+        this.render(true);
+      }, 500);
     });
 
     assetItems.on('mouseout', async (evt) => {
       evt.stopPropagation();
+
+      clearTimeout(this.hoverTimeout);
 
       this.assetHoveredIdx = -1;
 

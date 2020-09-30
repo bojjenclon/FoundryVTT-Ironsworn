@@ -689,23 +689,22 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       const cardEl = $('.hover-card');
 
-      cardEl.off('.character');
+      $('body').off('.hover');
+      cardEl.off('.hover');
 
       cardEl.trigger('focus');
 
-      cardEl.on('mouseleave.character', async (evt) => {
+      cardEl.on('mouseleave.hover', async (evt) => {
         await dismissCard(evt);
       });
 
-      cardEl.on('contextmenu.character', async (evt) => {
+      cardEl.on('contextmenu.hover', async (evt) => {
         await dismissCard(evt);
       });
 
       if (this.assetHoveredIdx > -1) {
-        const abilityScroll = async (evt) => {
+        const abilityScroll = async (evt, mod) => {
           evt.preventDefault();
-
-          const wheelEvt = evt.originalEvent as WheelEvent;
 
           const assetEl = assetItems[this.assetHoveredIdx];
           const { assetId } = assetEl.dataset;
@@ -714,7 +713,6 @@ export class IronswornCharacterSheet extends ActorSheet {
           const asset = actor.getOwnedItem(assetId);
           const abilities = asset.data.data.abilities.value;
 
-          const mod = Math.sign(wheelEvt.deltaY);
           this.assetAbilityIdx = this.assetAbilityIdx + mod;
           if (this.assetAbilityIdx >= abilities.length) {
             this.assetAbilityIdx = 0;
@@ -742,9 +740,18 @@ export class IronswornCharacterSheet extends ActorSheet {
           this.render(true);
         };
 
-        cardEl.on('wheel', async (evt) => {
+        cardEl.on('wheel.hover', async (evt) => {
           if (this.ctrlDown) {
-            await abilityScroll(evt);
+            const wheelEvt = evt.originalEvent as WheelEvent;
+            await abilityScroll(evt, Math.sign(wheelEvt.deltaY));
+          }
+        });
+
+        $('body').on('keydown.hover', async (evt) => {
+          if (evt.key === 'ArrowLeft') {
+            await abilityScroll(evt, -1);
+          } else if (evt.key === 'ArrowRight') {
+            await abilityScroll(evt, 1);
           }
         });
       }
@@ -753,6 +760,7 @@ export class IronswornCharacterSheet extends ActorSheet {
 
   close(): Promise<void> {
     $('body').off('.character');
+    $('body').off('.hover');
 
     return super.close();
   }

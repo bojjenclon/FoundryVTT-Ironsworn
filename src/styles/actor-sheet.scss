@@ -257,8 +257,10 @@
           }
 
           .vow-list {
-            list-style  : none;
-            padding-left: 4px;
+            list-style: none;
+
+            padding-left : 4px;
+            margin-bottom: 0;
 
             .vow-item {
               >span:hover {

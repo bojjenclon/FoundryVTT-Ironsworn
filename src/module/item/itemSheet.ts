@@ -172,7 +172,7 @@ export class IronswornItemSheet extends ItemSheet {
 
     const updateAcquired = async (evt, state) => {
       const { item } = this;
-      const abilities = item.data.data.abilities.value.slice();
+      const abilities = duplicate(item.data.data.abilities.value ?? []);
 
       const target = evt.currentTarget;
       const abilityEl = target.parentElement;
@@ -205,19 +205,19 @@ export class IronswornItemSheet extends ItemSheet {
 
       descEditor.find('.actions .close').on('click.editor', async (evt) => {
         const { item } = this;
-        const abilities = item.data.data.abilities.value.slice();
+        const abilities = duplicate(item.data.data.abilities.value ?? []);
 
         abilities[this.editingAbilityIdx].description = this.editingAbilityText;
-
-        await item.update({
-          ['data.abilities.value']: abilities
-        });
 
         this.showEditor = false;
         this.editingAbilityIdx = -1;
         delete this.editingAbilityText;
 
         descEditor.off('.editor');
+
+        await item.update({
+          ['data.abilities.value']: abilities
+        });
 
         await this._onSubmit(evt);
       });
@@ -252,11 +252,11 @@ export class IronswornItemSheet extends ItemSheet {
 
     html.find('.add-ability').on('click', async (evt) => {
       const { item } = this;
-
-      const abilities = item.data.data.abilities.value.slice();
+      const abilities = duplicate(item.data.data.abilities.value ?? []);
+      
       abilities.push({
         acquired: false,
-        description: 'Ability Text\n* Test'
+        description: 'Ability Text'
       });
 
       await item.update({

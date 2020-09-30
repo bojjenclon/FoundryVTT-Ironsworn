@@ -563,9 +563,13 @@ export class IronswornCharacterSheet extends ActorSheet {
       this.vowHoveredIdx = idx;
 
       const position = $(target).position();
+      const mousepos = {
+        top: position.top,
+        left: evt.clientX - $(target).offset().left
+      };
       const params = {
-        x: `${position.left - 65}px`,
-        y: `${position.top + 28}px`,
+        x: `${mousepos.left - 18}px`,
+        y: `${mousepos.top - 4}px`,
         name: vow.name,
         rank: Ironsworn.rank[vow.data.data.rank],
         progress: `${vow.data.data.progress.value} / 10`,
@@ -641,7 +645,6 @@ export class IronswornCharacterSheet extends ActorSheet {
 
       this.assetHoveredIdx = idx;
 
-      const position = $(target).position();
       const abilities = asset.data.data.abilities.value.map((ability) => {
         return {
           ...ability,
@@ -649,11 +652,17 @@ export class IronswornCharacterSheet extends ActorSheet {
           description: asset.assetAbilityHtml(ability)
         };
       });
-
       const pathType = Ironsworn.pathType[asset.data.data.type.value];
+
+      const position = $(target).position();
+      const mousepos = {
+        top: position.top,
+        left: evt.clientX - $(target).offset().left
+      };
+
       const params = {
-        x: `${position.left - 65}px`,
-        y: `${position.top + 28}px`,
+        x: `${mousepos.left - 22}px`,
+        y: `${mousepos.top - 4}px`,
         name: asset.name,
         type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
         abilities: abilities
@@ -679,9 +688,11 @@ export class IronswornCharacterSheet extends ActorSheet {
       }
     });
 
-    // Make sure hover cards don't get "stuck"
+    // Remove hover cards when the mouse leaves them
     if (this.hoverCard) {
-      $('.hover-card').on('mouseover', async (evt) => {
+      $('.hover-card').on('mouseleave', async (evt) => {
+        evt.stopPropagation();
+
         this.bondHoveredIdx = -1;
         this.vowHoveredIdx = -1;
         this.assetHoveredIdx = -1;

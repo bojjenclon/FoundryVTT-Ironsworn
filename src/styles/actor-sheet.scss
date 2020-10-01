@@ -319,6 +319,10 @@
             padding   : 0;
 
             margin-top: 1em;
+            padding   : 4px 0;
+
+            background: rgba(0, 0, 0, 0.6);
+            color     : white;
 
             .active {
               text-decoration: underline;

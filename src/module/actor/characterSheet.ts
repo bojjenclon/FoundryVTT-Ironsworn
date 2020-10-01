@@ -1,6 +1,4 @@
 import { Ironsworn } from "../config";
-import { IronswornItem } from "../item/item";
-import { IronswornActor } from "./actor";
 
 const CHAT_ROLL_HTML = 'systems/ironsworn/templates/chat/stat-roll.html';
 

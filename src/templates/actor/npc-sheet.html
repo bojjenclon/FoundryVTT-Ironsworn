@@ -1,0 +1,34 @@
+<form class="{{cssClass}} npc flexcol" autocomplete="off">
+  <header class="sheet-header">
+    <input class="name" type="text" name="actor.name" value="{{actor.name}}" data-dtype="String" />
+  </header>
+
+  <section class="main">
+    <div class="input-group">
+      <label for="data.rank">Rank</label>
+      <div class="ranks">
+        {{#each ranks as |rank|}}
+        <div class="rank-wrapper">
+          <input id="rank-{{rank}}" type="radio" {{checked (eq rank ../currentRank)}} data-rank-idx="{{@index}}" />
+          <label for="rank-{{rank}}">{{rank}}</label>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="data.features">Features</label>
+      <textarea class="features" name="data.features.value">{{data.features.value}}</textarea>
+    </div>
+
+    <div class="input-group">
+      <label for="data.drives">Drives</label>
+      <textarea class="drives" name="data.drives.value">{{data.drives.value}}</textarea>
+    </div>
+
+    <div class="input-group">
+      <label for="data.tactics">Tactics</label>
+      <textarea class="tactics" name="data.tactics.value">{{data.tactics.value}}</textarea>
+    </div>
+  </section>
+</form>

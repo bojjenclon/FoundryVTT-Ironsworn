@@ -13,7 +13,14 @@
 }
 
 &.sheet.actor {
-  min-width: 750px;
+  &.character {
+    min-width: 750px;
+  }
+
+  &.npc {
+    min-width : 625px;
+    min-height: 525px;
+  }
 
   form {
     font-family: OPTILagoon, Arial-bold, arial, sans-serif;
@@ -83,6 +90,54 @@
               }
             }
           }
+        }
+      }
+    }
+
+    &.npc {
+      .sheet-header {
+        flex: 0;
+
+        .name {
+          font-size: 1.2rem;
+          height   : 2.2rem;
+        }
+      }
+
+      .main {
+        flex-direction: column;
+
+        padding    : 4px;
+        padding-top: 0;
+
+        .ranks {
+          display        : flex;
+          align-items    : center;
+          justify-content: space-around;
+
+          font-family   : OPTILagoon, Arial-bold, arial, sans-serif;
+          text-transform: uppercase;
+          font-size     : 10px;
+
+          .rank-wrapper {
+            display    : flex;
+            align-items: center;
+
+            input {
+              width        : auto;
+              margin-bottom: 2px;
+            }
+          }
+        }
+
+        >div:not(:first-child) {
+          margin-top: 1rem;
+        }
+
+        textarea {
+          resize: none;
+
+          height: 6em;
         }
       }
     }

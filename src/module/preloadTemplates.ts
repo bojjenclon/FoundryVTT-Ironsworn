@@ -12,6 +12,7 @@ export const preloadTemplates = async function () {
 		"systems/ironsworn/templates/dialog/bond-card.html",
 		"systems/ironsworn/templates/dialog/vow-card.html",
 		"systems/ironsworn/templates/dialog/asset-card.html",
+		"systems/ironsworn/templates/dialog/gear-card.html",
 
 		"systems/ironsworn/templates/chat/stat-roll.html"
 	];

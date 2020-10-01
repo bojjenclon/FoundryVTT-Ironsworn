@@ -155,6 +155,8 @@ export class IronswornItemSheet extends ItemSheet {
       this.render(true);
     };
 
+    const descEditor = html.find('.ability-desc-editor');
+
     const closeEditor = async (evt) => {
       const { item } = this;
       const abilities = duplicate(item.data.data.abilities.value ?? []);
@@ -222,8 +224,6 @@ export class IronswornItemSheet extends ItemSheet {
         closeEditor(evt);
       });
     };
-
-    const descEditor = html.find('.ability-desc-editor');
 
     html.find('.ability-not-acquired').on('click', async (evt) => {
       updateAcquired(evt, true);
@@ -313,5 +313,15 @@ export class IronswornItemSheet extends ItemSheet {
         this._equipmentListeners(html);
         break;
     }
+  }
+
+  close() {
+    if (this.showEditor) {
+      this.showEditor = false;
+      this.editingAbilityIdx = -1;
+      delete this.editingAbilityText;
+    }
+
+    return super.close();
   }
 }

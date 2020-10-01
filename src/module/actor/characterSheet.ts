@@ -779,6 +779,7 @@ export class IronswornCharacterSheet extends ActorSheet {
       if (this.assetHoveredIdx > -1) {
         const abilityScroll = async (evt, mod) => {
           evt.preventDefault();
+          evt.stopPropagation();
 
           const assetEl = assetItems[this.assetHoveredIdx];
           const { assetId } = assetEl.dataset;

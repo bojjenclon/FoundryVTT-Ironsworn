@@ -51,6 +51,7 @@ export class IronswornCharacterSheet extends ActorSheet {
   vowHoveredIdx: number = -1;
   assetHoveredIdx: number = -1;
   assetAbilityIdx: number = 0;
+  gearHoveredIdx: number = -1;
 
   hoverTimeout: number;
   hoverCard: HTMLElement;
@@ -693,6 +694,59 @@ export class IronswornCharacterSheet extends ActorSheet {
       const { gearId } = target.dataset;
 
       await actor.deleteOwnedItem(gearId);
+    });
+
+    gearList.on('mouseover', async (evt) => {
+      clearTimeout(this.hoverTimeout);
+
+      this.hoverTimeout = setTimeout(async () => {
+        evt.stopPropagation();
+
+        const { actor } = this;
+
+        const target = evt.currentTarget;
+        const { gearId } = target.dataset;
+        const idx = parseInt(target.dataset.idx);
+
+        // If we're not on this asset already, show its info card
+        if (this.assetHoveredIdx === idx) {
+          return;
+        }
+
+        const gear = actor.getOwnedItem(gearId);
+
+        this.gearHoveredIdx = idx;
+
+        const position = $(target).position();
+        const params = {
+          x: `${position.left - 125 + evt.offsetX}px`,
+          y: `${position.top - 4}px`,
+          name: gear.name,
+          quantity: gear.data.data.quantity,
+          description: gear.data.data.description.value
+        };
+        const html = await renderTemplate('systems/ironsworn/templates/dialog/gear-card.html', params);
+        this.hoverCard = html;
+
+        await this._onSubmit(evt);
+        this.render(true);
+      }, 500);
+    });
+
+    gearList.on('mouseout', async (evt) => {
+      evt.stopPropagation();
+
+      clearTimeout(this.hoverTimeout);
+
+      this.gearHoveredIdx = -1;
+
+      // Hide hover card
+      if (this.hoverCard) {
+        delete this.hoverCard;
+
+        await this._onSubmit(evt);
+        this.render(true);
+      }
     });
 
     // Remove hover cards when the mouse leaves them

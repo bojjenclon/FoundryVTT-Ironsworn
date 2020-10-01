@@ -50,4 +50,9 @@ export const registerHandlebars = () => {
   Handlebars.registerHelper('rankName', val => {
     return Ironsworn.rank[val];
   });
+
+  Handlebars.registerHelper('convertNewLines', text => {
+    const lines = text.split('\n');
+    return lines.join('<br>');
+  });
 }

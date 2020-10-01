@@ -647,4 +647,34 @@
       color     : white;
     }
   }
+
+  .gear-card {
+    width : 250px;
+    height: 125px;
+
+    .card-header {
+      display: flex;
+
+      .name {
+        flex: 1;
+      }
+
+      .quantity {
+        flex: 0;
+      }
+    }
+
+    .card-body {
+      display       : flex;
+      flex-direction: column;
+
+      overflow: hidden;
+
+      .description {
+        flex: 1;
+
+        overflow: auto;
+      }
+    }
+  }
 }

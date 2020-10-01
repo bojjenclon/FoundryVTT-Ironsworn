@@ -372,6 +372,10 @@
                 .editor {
                   flex: 1;
 
+                  * {
+                    text-transform: none;
+                  }
+
                   .preview,
                   .side-by-side,
                   .fullscreen,

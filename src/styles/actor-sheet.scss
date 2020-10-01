@@ -547,5 +547,19 @@
         }
       }
     }
+
+    .page-count {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+
+      padding: 2px 4px;
+      
+      font-size: 0.6rem;
+      text-align: right;
+
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+    }
   }
 }

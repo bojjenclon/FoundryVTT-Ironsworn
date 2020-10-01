@@ -647,7 +647,8 @@ export class IronswornCharacterSheet extends ActorSheet {
           type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
           limit: asset.data.data.limit.value,
           acquired: ability && ability.acquired,
-          ability: abilityHtml
+          ability: abilityHtml,
+          page: abilities.length === 0 ? null : `${this.assetAbilityIdx + 1}/${abilities.length}`
         };
         const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
         this.hoverCard = html;
@@ -733,7 +734,8 @@ export class IronswornCharacterSheet extends ActorSheet {
             type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
             limit: asset.data.data.limit.value,
             acquired: ability && ability.acquired,
-            ability: abilityHtml
+            ability: abilityHtml,
+            page: abilities.length === 0 ? null : `${this.assetAbilityIdx + 1}/${abilities.length}`
           };
           const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
           this.hoverCard = html;

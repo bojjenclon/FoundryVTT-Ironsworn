@@ -561,6 +561,23 @@
       text-overflow: ellipsis;
     }
 
+    p {
+      margin: 0;
+    }
+
+    ul {
+      list-style: none;
+
+      margin      : 0.25em 0;
+      padding     : 0;
+      padding-left: 6px;
+
+      li {
+        background  : url("assets/ui/chevron-right.png") no-repeat left 2px;
+        padding-left: 14px;
+      }
+    }
+
     hr {
       flex : 0;
       width: 100%;
@@ -668,23 +685,6 @@
         flex: 1;
 
         overflow: auto;
-
-        p {
-          margin: 0;
-        }
-
-        ul {
-          list-style: none;
-
-          margin      : 0.25em 0;
-          padding     : 0;
-          padding-left: 6px;
-
-          li {
-            background  : url("assets/ui/chevron-right.png") no-repeat left 2px;
-            padding-left: 14px;
-          }
-        }
       }
     }
 

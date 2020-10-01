@@ -65,7 +65,7 @@ export const registerHandlebars = () => {
     let inList = false;
 
     for (let lineIdx = 0; lineIdx < numLines; lineIdx++) {
-      let line = lines[lineIdx];
+      let line = lines[lineIdx].trim();
 
       // Handle bullet point lists
       if (line.startsWith('* ')) {

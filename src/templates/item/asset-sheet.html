@@ -12,13 +12,14 @@
   <div class="sheet-body">
     <input class="name" type="text" name="name" value="{{item.name}}" data-dtype="String" />
 
-    <input class="limit" type="text" name="data.limit.value" value="{{data.limit.value}}" placeholder="Limitation" data-dtype="String" />
+    <input class="limit" type="text" name="data.limit.value" value="{{data.limit.value}}" placeholder="Limitation"
+      data-dtype="String" />
 
     <div class="ability-list">
       {{#each abilities as |ability|}}
       <div class="ability" data-idx="{{@index}}">
         <div class="ability-{{#unless ability.acquired}}not-{{/unless}}acquired"></div>
-        <div class="ability-desc">{{{ability.description}}}</div>
+        <div class="ability-desc">{{{formatMarkdown ability.description}}}</div>
         <a class="ability-edit"><i class="fas fa-edit"></i></a>
         <a class="ability-delete"><i class="fas fa-times"></i></a>
       </div>

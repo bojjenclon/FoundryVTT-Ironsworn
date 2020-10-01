@@ -41,13 +41,7 @@ export class IronswornItemSheet extends ItemSheet {
 
     data.types = Ironsworn.pathType;
 
-    data.abilities = item.data.data.abilities.value.map((ability) => {
-      return {
-        ...ability,
-
-        description: item.assetAbilityHtml(ability)
-      };
-    });
+    data.abilities = item.data.data.abilities.value;
 
     data.showEditor = this.showEditor;
     data.editingAbilityText = this.editingAbilityText;

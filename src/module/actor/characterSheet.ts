@@ -636,7 +636,6 @@ export class IronswornCharacterSheet extends ActorSheet {
 
         const abilities = asset.data.data.abilities.value;
         const ability = abilities[this.assetAbilityIdx];
-        const abilityHtml = ability ? asset.assetAbilityHtml(ability) : '';
         const pathType = Ironsworn.pathType[asset.data.data.type.value];
 
         const position = $(target).position();
@@ -647,7 +646,7 @@ export class IronswornCharacterSheet extends ActorSheet {
           type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
           limit: asset.data.data.limit.value,
           acquired: ability && ability.acquired,
-          ability: abilityHtml,
+          ability: ability ? ability.description : '',
           page: abilities.length === 0 ? null : `${this.assetAbilityIdx + 1}/${abilities.length}`
         };
         const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
@@ -796,7 +795,6 @@ export class IronswornCharacterSheet extends ActorSheet {
           }
 
           const ability = abilities[this.assetAbilityIdx];
-          const abilityHtml = ability ? asset.assetAbilityHtml(ability) : '';
           const pathType = Ironsworn.pathType[asset.data.data.type.value];
 
           const position = cardEl.position();
@@ -807,7 +805,7 @@ export class IronswornCharacterSheet extends ActorSheet {
             type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
             limit: asset.data.data.limit.value,
             acquired: ability && ability.acquired,
-            ability: abilityHtml,
+            ability: ability ? ability.description : '',
             page: abilities.length === 0 ? null : `${this.assetAbilityIdx + 1}/${abilities.length}`
           };
           const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);

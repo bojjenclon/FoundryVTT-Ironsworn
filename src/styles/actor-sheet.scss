@@ -350,6 +350,13 @@
 
                   word-spacing: 2px;
 
+                  font-family: Signika, sans-serif;
+                  font-size  : 1rem;
+
+                  * {
+                    text-transform: none;
+                  }
+
                   // We only want wrapped items to have a margin,
                   // so don't apply this rule to the first three items.
                   &:not(:nth-of-type(1)):not(:nth-of-type(2)):not(:nth-of-type(3)) {
@@ -407,6 +414,13 @@
             margin-bottom: 0;
 
             .vow-item {
+              font-family: Signika, sans-serif;
+              font-size  : 1rem;
+
+              * {
+                text-transform: none;
+              }
+
               &:not(:last-child) {
                 margin-bottom: 4px;
               }
@@ -436,6 +450,13 @@
             margin-bottom: 0;
 
             .asset-item {
+              font-family: Signika, sans-serif;
+              font-size  : 1rem;
+
+              * {
+                text-transform: none;
+              }
+
               &:not(:last-child) {
                 margin-bottom: 4px;
               }
@@ -482,7 +503,16 @@
                 display    : flex;
                 align-items: center;
 
-                font-size: 10px;
+                font-family: Signika, sans-serif;
+                font-size  : 1rem;
+
+                * {
+                  text-transform: none;
+                }
+
+                label {
+                  font-weight: normal;
+                }
               }
 
               &:not(:last-child) {
@@ -552,7 +582,7 @@
       flex: 0;
 
       font-family: OPTILagoon, Arial-bold, arial, sans-serif;
-      font-size  : 12px;
+      font-size  : 11px;
       font-weight: bold;
 
       text-transform: uppercase;
@@ -589,7 +619,7 @@
   }
 
   .bond-card {
-    width : 200px;
+    width : 300px;
     height: 150px;
 
     overflow: hidden;
@@ -600,7 +630,7 @@
   }
 
   .vow-card {
-    width : 250px;
+    width : 300px;
     height: 175px;
 
     overflow: hidden;
@@ -625,8 +655,8 @@
   }
 
   .asset-card {
-    width : 250px;
-    height: 175px;
+    width : 300px;
+    height: 225px;
 
     padding: 0;
 

@@ -75,14 +75,9 @@ export class IronswornItemSheet extends ItemSheet {
   }
 
   _bondListeners(html: JQuery) {
-    const window = html.closest('.window-app');
-    window.addClass('bond');
   }
 
   _vowListeners(html: JQuery) {
-    const window = html.closest('.window-app');
-    window.addClass('vow');
-
     const { item } = this;
 
     const ranks = html.find('.ranks input');
@@ -148,9 +143,6 @@ export class IronswornItemSheet extends ItemSheet {
   keyUpTimeout: number;
 
   _assetListeners(html: JQuery) {
-    const window = html.closest('.window-app');
-    window.addClass('asset');
-
     const updateAcquired = async (evt, state) => {
       const { item } = this;
       const abilities = duplicate(item.data.data.abilities.value ?? []);
@@ -299,10 +291,17 @@ export class IronswornItemSheet extends ItemSheet {
     }
   }
 
+  _equipmentListeners(html: JQuery) {
+  }
+
   activateListeners(html: JQuery) {
     super.activateListeners(html);
 
     const { type } = this.item.data;
+
+    const window = html.closest('.window-app');
+    window.addClass(type);
+
     switch (type) {
       case 'bond':
         this._bondListeners(html);
@@ -314,6 +313,10 @@ export class IronswornItemSheet extends ItemSheet {
 
       case 'asset':
         this._assetListeners(html);
+        break;
+
+      case 'equipment':
+        this._equipmentListeners(html);
         break;
     }
   }

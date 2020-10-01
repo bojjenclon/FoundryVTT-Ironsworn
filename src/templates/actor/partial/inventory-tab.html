@@ -1,0 +1,13 @@
+<section class="inventory">
+  <div class="lined-header">
+    <div class="line"></div>
+    <div class="text">Gear</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="equipment-list">
+    {{#each equipment as |gear|}}
+    <a class="gear" data-gear-id="{{gear.id}}">({{gear.data.data.quantity}}) {{gear.name}}</a>
+    {{/each}}
+  </div>
+</section>

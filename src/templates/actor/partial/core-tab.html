@@ -1,0 +1,127 @@
+<section class="bonds">
+  <div class="lined-header">
+    <div class="line"></div>
+    <div class="text">Bonds</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="progress">
+    {{#each bonds as |bond idx|}}
+    <div class="pip {{#if bond.id}}occupied{{/if}}" data-idx="{{idx}}" data-bond-id="{{bond.id}}"></div>
+    {{/each}}
+  </div>
+</section>
+
+<section class="vows">
+  <div class="lined-header">
+    <div class="line"></div>
+    <div class="text">Vows</div>
+    <div class="line"></div>
+  </div>
+
+  <ul class="vow-list">
+    {{#each vows as |vow|}}
+    <li class="vow-item">
+      <span data-idx="{{@index}}" data-vow-id="{{vow.id}}">{{vow.name}}</span>
+    </li>
+    {{/each}}
+  </ul>
+</section>
+
+<section class="assets">
+  <div class="lined-header">
+    <div class="line"></div>
+    <div class="text">Assets</div>
+    <div class="line"></div>
+  </div>
+
+  <ul class="asset-list">
+    {{#each assets as |asset|}}
+    <li class="asset-item">
+      <span data-idx="{{@index}}" data-asset-id="{{asset.id}}">{{asset.name}}</span>
+    </li>
+    {{/each}}
+  </ul>
+</section>
+
+<section class="debilities">
+  <div class="lined-header">
+    <div class="line"></div>
+    <div class="text">Debilities</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="content">
+    <div class="left">
+      <strong>Conditions</strong>
+
+      <div class="wrapper">
+        <div class="item">
+          <input type="checkbox" name="data.debilities.conditions.wounded" id="wounded"
+            {{checked actor.data.debilities.conditions.wounded}} />
+
+          <label for="wounded">Wounded</label>
+        </div>
+
+        <div class="item">
+          <input type="checkbox" name="data.debilities.conditions.shaken" id="shaken"
+            {{checked actor.data.debilities.conditions.shaken}} />
+
+          <label for="shaken">Shaken</label>
+        </div>
+
+        <div class="item">
+          <input type="checkbox" name="data.debilities.conditions.unprepared" id="unprepared"
+            {{checked actor.data.debilities.conditions.unprepared}} />
+
+          <label for="unprepared">Unprepared</label>
+        </div>
+
+        <div class="item">
+          <input type="checkbox" name="data.debilities.conditions.encumbered" id="encumbered"
+            {{checked actor.data.debilities.conditions.encumbered}} />
+
+          <label for="encumbered">Encumbered</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <strong>Banes</strong>
+
+      <div class="wrapper">
+        <div class="item">
+          <input type="checkbox" name="data.debilities.banes.maimed" id="maimed"
+            {{checked actor.data.debilities.banes.maimed}} />
+
+          <label for="maimed">Maimed</label>
+        </div>
+
+        <div class="item">
+          <input type="checkbox" name="data.debilities.banes.corrupted" id="corrupted"
+            {{checked actor.data.debilities.banes.corrupted}} />
+
+          <label for="corrupted">Corrupted</label>
+        </div>
+      </div>
+
+      <strong>Burdens</strong>
+
+      <div class="wrapper">
+        <div class="item">
+          <input type="checkbox" name="data.debilities.burdens.cursed" id="cursed"
+            {{checked actor.data.debilities.burdens.cursed}} />
+
+          <label for="cursed">Cursed</label>
+        </div>
+
+        <div class="item">
+          <input type="checkbox" name="data.debilities.burdens.tormented" id="tormented"
+            {{checked actor.data.debilities.burdens.tormented}} />
+
+          <label for="tormented">Tormented</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

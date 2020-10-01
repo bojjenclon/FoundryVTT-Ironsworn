@@ -11,5 +11,11 @@
   "ironsworn.asset.type.companion": "Companion",
   "ironsworn.asset.type.path": "Path",
   "ironsworn.asset.type.combatTalent": "Combat Talent",
-  "ironsworn.asset.type.ritual": "Ritual"
+  "ironsworn.asset.type.ritual": "Ritual",
+  "ironsworn.tab.core": "Core",
+  "ironsworn.tab.inventory": "Inventory",
+  "ironsworn.tab.biography": "Biography",
+  "ironsworn.tooltip.core": "Core",
+  "ironsworn.tooltip.inventory": "Inventory",
+  "ironsworn.tooltip.biography": "Biography"
 }

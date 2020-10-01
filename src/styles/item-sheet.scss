@@ -47,8 +47,8 @@
         overflow: hidden;
 
         input.name {
-          margin: 2px 1px;
-          margin-right: 0;
+          margin       : 2px 1px;
+          margin-right : 0;
           padding      : 4px 6px;
           font-size    : 1.2em;
           border-radius: 0;
@@ -59,9 +59,9 @@
         }
 
         input.limit {
-          margin: 1px 1px;
+          margin       : 1px 1px;
           margin-bottom: 4px;
-          margin-right: 0;
+          margin-right : 0;
 
           border-radius: 0;
         }
@@ -205,6 +205,36 @@
 
           font-family: Arial, Helvetica, sans-serif;
           font-size  : 1.1em;
+        }
+      }
+    }
+  }
+
+  &.equipment {
+    min-width : 350px;
+    min-height: 250px;
+
+    .sheet-header {
+      display: flex;
+
+      input.quantity {
+        flex: 0;
+
+        width      : 3.5em;
+        margin-left: 2px;
+
+        font-size: 1rem;
+
+        background   : rgba(0, 0, 0, 0.05);
+        border       : 1px solid #7a7971;
+        border-radius: 3px;
+
+        -moz-appearance: textfield;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin            : 0;
         }
       }
     }

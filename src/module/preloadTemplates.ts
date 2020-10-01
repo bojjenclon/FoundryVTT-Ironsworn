@@ -1,5 +1,8 @@
 export const preloadTemplates = async function () {
 	const templatePaths = [
+		"systems/ironsworn/templates/actor/partial/core-tab.html",
+		"systems/ironsworn/templates/actor/partial/inventory-tab.html",
+		"systems/ironsworn/templates/actor/partial/bio-tab.html",
 		"systems/ironsworn/templates/actor/character-sheet.html",
 
 		"systems/ironsworn/templates/item/bond-sheet.html",

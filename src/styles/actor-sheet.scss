@@ -214,11 +214,20 @@
             font-size: 1.6em;
           }
         }
+
+        .momentum-reset {
+          margin-bottom: 4px;
+        }
       }
 
       .center {
+        display       : flex;
+        flex-direction: column;
+
+        flex      : 1;
         flex-basis: 80%;
-        margin    : 0 12px;
+
+        margin: 0 12px;
 
         section:not(:first-child) {
           margin-top: 18px;
@@ -241,6 +250,82 @@
               &:hover {
                 cursor: pointer;
                 color : #666666;
+              }
+            }
+          }
+        }
+
+        .sheet-tabs {
+          ul {
+            display        : flex;
+            justify-content: space-around;
+
+            list-style: none;
+            padding   : 0;
+
+            margin-top: 1em;
+
+            .active {
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .tab-body {
+          display       : flex;
+          flex-direction: column;
+
+          flex: 1;
+
+          .tab.active {
+            flex: 1;
+
+            &.inventory {
+              display       : flex;
+              flex-direction: column;
+
+              .equipment-list {
+                display  : flex;
+                flex-wrap: wrap;
+
+                flex: 1;
+
+                .gear {
+                  flex-basis: 33%;
+
+                  word-spacing: 2px;
+
+                  // We only want wrapped items to have a margin,
+                  // so don't apply this rule to the first three items.
+                  &:not(:nth-of-type(1)):not(:nth-of-type(2)):not(:nth-of-type(3)) {
+                    margin-top: 12px;
+                  }
+                }
+              }
+            }
+
+            &.bio {
+              display       : flex;
+              flex-direction: column;
+
+              section.bio {
+                display       : flex;
+                flex-direction: column;
+
+                flex: 1;
+
+                .editor {
+                  flex: 1;
+
+                  .preview,
+                  .side-by-side,
+                  .fullscreen,
+                  .guide,
+                  .separator:nth-of-type(4),
+                  .separator:nth-of-type(5) {
+                    display: none;
+                  }
+                }
               }
             }
           }
@@ -520,7 +605,7 @@
 
       .limit {
         margin-bottom: 2px;
-        
+
         font-size: 0.8rem;
       }
 
@@ -550,16 +635,16 @@
 
     .page-count {
       position: absolute;
-      bottom: 2px;
-      right: 2px;
+      bottom  : 2px;
+      right   : 2px;
 
       padding: 2px 4px;
-      
-      font-size: 0.6rem;
+
+      font-size : 0.6rem;
       text-align: right;
 
       background: rgba(0, 0, 0, 0.6);
-      color: white;
+      color     : white;
     }
   }
 }

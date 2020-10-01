@@ -21,6 +21,8 @@ export interface CharacterSheetData extends ActorSheetData {
   vows: Array<Object>;
   assets: Array<Object>;
 
+  equipment: Array<Object>;
+
   hoverCard: HTMLElement;
 }
 
@@ -30,6 +32,11 @@ export class IronswornCharacterSheet extends ActorSheet {
       classes: ['ironsworn', 'sheet', 'actor'],
       width: 750,
       height: 800,
+      tabs: [{
+        navSelector: ".sheet-tabs",
+        contentSelector: ".tab-body",
+        initial: "core"
+      }]
     });
   }
 
@@ -110,6 +117,8 @@ export class IronswornCharacterSheet extends ActorSheet {
 
     // Bonds
     const bonds = [];
+    // Since bonds are displayed as a block of pips, we need
+    // to ensure the array is always a fixed size of 10.
     for (let i = 0; i < 10; i++) {
       bonds.push({});
     }
@@ -122,20 +131,12 @@ export class IronswornCharacterSheet extends ActorSheet {
     data.bonds = bonds;
 
     // Vows
-    const vows = [];
-    const actorVows = actor.itemTypes['vow'] || [];
-    actorVows.forEach(async (vow, idx) => {
-      vows[idx] = vow;
-    });
-    data.vows = vows;
+    data.vows = actor.itemTypes['vow'] || [];
 
-    // Vows
-    const assets = [];
-    const actorAssets = actor.itemTypes['asset'] || [];
-    actorAssets.forEach(async (asset, idx) => {
-      assets[idx] = asset;
-    });
-    data.assets = assets;
+    // Assets
+    data.assets = actor.itemTypes['asset'] || [];
+
+    data.equipment = actor.itemTypes['equipment'] || [];
 
     data.hoverCard = this.hoverCard;
 
@@ -672,6 +673,26 @@ export class IronswornCharacterSheet extends ActorSheet {
         await this._onSubmit(evt);
         this.render(true);
       }
+    });
+
+    const gearList = html.find('.equipment-list .gear');
+    gearList.on('click', async (evt) => {
+      const { actor } = this;
+
+      const target = evt.currentTarget;
+      const { gearId } = target.dataset;
+
+      const gear = await actor.getOwnedItem(gearId);
+      gear.sheet.render(true);
+    });
+
+    gearList.on('contextmenu', async (evt) => {
+      const { actor } = this;
+
+      const target = evt.currentTarget;
+      const { gearId } = target.dataset;
+
+      await actor.deleteOwnedItem(gearId);
     });
 
     // Remove hover cards when the mouse leaves them

@@ -645,6 +645,7 @@ export class IronswornCharacterSheet extends ActorSheet {
           y: `${position.top - 4}px`,
           name: asset.name,
           type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
+          limit: asset.data.data.limit.value,
           acquired: ability && ability.acquired,
           ability: abilityHtml
         };
@@ -730,6 +731,7 @@ export class IronswornCharacterSheet extends ActorSheet {
             y: `${position.top}px`,
             name: asset.name,
             type: game.i18n.localize(`ironsworn.asset.type.${pathType}`),
+            limit: asset.data.data.limit.value,
             acquired: ability && ability.acquired,
             ability: abilityHtml
           };

@@ -143,6 +143,9 @@
       "type": {
         "value": 0
       },
+      "limit": {
+        "value": ""
+      },
       "abilities": {
         "value": []
       }

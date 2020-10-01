@@ -430,11 +430,19 @@
   .bond-card {
     width : 200px;
     height: 150px;
+
+    overflow: hidden;
+
+    .desc {
+      overflow: auto;
+    }
   }
 
   .vow-card {
     width : 250px;
     height: 175px;
+
+    overflow: hidden;
 
     .rank {
       font-family: OPTILagoon, Arial-bold, arial, sans-serif;
@@ -448,6 +456,10 @@
       font-size  : 10px;
 
       text-transform: uppercase;
+    }
+
+    .desc {
+      overflow: auto;
     }
   }
 
@@ -505,6 +517,12 @@
       padding: 6px;
 
       overflow: hidden;
+
+      .limit {
+        margin-bottom: 2px;
+        
+        font-size: 0.8rem;
+      }
 
       .ability {
         flex: 1;

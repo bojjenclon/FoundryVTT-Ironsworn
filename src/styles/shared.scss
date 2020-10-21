@@ -37,4 +37,17 @@ textarea {
 
 .editor {
   font-family: Signika, sans-serif;
+
+  // For MEME
+  .EasyMDEContainer {
+
+    .preview,
+    .side-by-side,
+    .fullscreen,
+    .guide,
+    .separator:nth-of-type(4),
+    .separator:nth-of-type(5) {
+      display: none;
+    }
+  }
 }

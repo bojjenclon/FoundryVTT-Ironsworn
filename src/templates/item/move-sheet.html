@@ -1,0 +1,9 @@
+<form class="{{cssClass}} move flexcol" autocomplete="off">
+  <header class="sheet-header">
+    <input class="name" type="text" name="name" value="{{item.name}}" data-dtype="String" />
+  </header>
+
+  <div class="sheet-body">
+    {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+  </div>
+</form>

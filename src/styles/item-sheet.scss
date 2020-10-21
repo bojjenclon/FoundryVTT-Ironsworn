@@ -1,12 +1,17 @@
 &.sheet.item {
   &.bond {
-    min-width : 250px;
-    min-height: 150px;
+    min-width : 300px;
+    min-height: 200px;
   }
 
   &.vow {
     min-width : 600px;
     min-height: 300px;
+  }
+
+  &.move {
+    min-width : 475px;
+    min-height: 550px;
   }
 
   &.asset {

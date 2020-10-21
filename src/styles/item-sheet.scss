@@ -12,6 +12,12 @@
   &.move {
     min-width : 500px;
     min-height: 500px;
+
+    .editor {
+      .CodeMirror-vscrollbar {
+        overflow-y: hidden;
+      }
+    }
   }
 
   &.asset {

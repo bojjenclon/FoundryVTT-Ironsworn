@@ -18,7 +18,65 @@
   "styles": [
     "ironsworn.css"
   ],
-  "packs": [],
+  "packs": [
+    {
+      "name": "adventure-moves",
+      "label": "Adventure Moves",
+      "system": "ironsworn",
+      "path": "./packs/moves/adventure-moves.db",
+      "entity": "Item"
+    },
+    {
+      "name": "combat-moves",
+      "label": "Combat Moves",
+      "system": "ironsworn",
+      "path": "./packs/moves/combat-moves.db",
+      "entity": "Item"
+    },
+    {
+      "name": "fate-moves",
+      "label": "Fate Moves",
+      "system": "ironsworn",
+      "path": "./packs/moves/fate-moves.db",
+      "entity": "Item"
+    },
+    {
+      "name": "quest-moves",
+      "label": "Quest Moves",
+      "system": "ironsworn",
+      "path": "./packs/moves/quest-moves.db",
+      "entity": "Item"
+    },
+    {
+      "name": "relationship-moves",
+      "label": "Relationship Moves",
+      "system": "ironsworn",
+      "path": "./packs/moves/relationship-moves.db",
+      "entity": "Item"
+    },
+    {
+      "name": "suffer-moves",
+      "label": "Suffer Moves",
+      "system": "ironsworn",
+      "path": "./packs/moves/suffer-moves.db",
+      "entity": "Item"
+    },
+
+    {
+      "name": "move-tables",
+      "label": "Move Tables",
+      "system": "ironsworn",
+      "path": "./packs/tables/move-tables.db",
+      "entity": "RollTable"
+    },
+    {
+      "name": "draw-a-conclusion",
+      "label": "Draw a Conclusion",
+      "system": "ironsworn",
+      "path": "./packs/oracle/draw-a-conclusion.db",
+      "entity": "RollTable"
+    }
+  ],
   "languages": [
     {
       "lang": "en",

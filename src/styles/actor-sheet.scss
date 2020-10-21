@@ -311,6 +311,13 @@
         }
 
         .sheet-tabs {
+          // Override default styles
+          height: auto;
+          flex: none;
+          margin: 0;
+          line-height: normal;
+          border: none;
+
           ul {
             display        : flex;
             justify-content: space-around;

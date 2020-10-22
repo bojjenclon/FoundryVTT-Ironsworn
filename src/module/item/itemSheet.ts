@@ -189,20 +189,19 @@ export class IronswornItemSheet extends ItemSheet {
       $(document).off('.editor');
       descEditor.off('.editor');
 
-      $(document).on('keydown.editor', async (evt) => {
-        if (this.editorBlurTimeout) {
-          clearTimeout(this.editorBlurTimeout);
-        }
+      $(document).on('keydown.editor', evt => {
+        clearTimeout(this.editorBlurTimeout);
 
         if (this.isBlurred) {
           this.isBlurred = false;
+
           textArea.trigger('focus');
           textArea.prop('selectionStart', this.caretPosition);
           textArea.prop('selectionEnd', this.caretPosition);
         }
       });
 
-      textArea.on('keyup.editor', async (evt) => {
+      textArea.on('keyup.editor', evt => {
         if (evt.key === 'Escape') {
           closeEditor(evt);
           return;

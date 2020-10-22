@@ -466,7 +466,6 @@ export class IronswornCharacterSheet extends ActorSheet {
           const html = await renderTemplate('systems/ironsworn/templates/dialog/bond-card.html', params);
           this.hoverCard = html;
 
-          await this._onSubmit(evt);
           this.render(true);
         }, 500);
       } else {
@@ -487,7 +486,6 @@ export class IronswornCharacterSheet extends ActorSheet {
       if (this.hoverCard) {
         delete this.hoverCard;
 
-        await this._onSubmit(evt);
         this.render(true);
       } else {
         // Unhighlight
@@ -560,7 +558,6 @@ export class IronswornCharacterSheet extends ActorSheet {
         const html = await renderTemplate('systems/ironsworn/templates/dialog/vow-card.html', params);
         this.hoverCard = html;
 
-        await this._onSubmit(evt);
         this.render(true);
       }, 500);
     });
@@ -576,7 +573,6 @@ export class IronswornCharacterSheet extends ActorSheet {
       if (this.hoverCard) {
         delete this.hoverCard;
 
-        await this._onSubmit(evt);
         this.render(true);
       }
     });
@@ -652,7 +648,6 @@ export class IronswornCharacterSheet extends ActorSheet {
         const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
         this.hoverCard = html;
 
-        await this._onSubmit(evt);
         this.render(true);
       }, 500);
     });
@@ -668,7 +663,6 @@ export class IronswornCharacterSheet extends ActorSheet {
       if (this.hoverCard) {
         delete this.hoverCard;
 
-        await this._onSubmit(evt);
         this.render(true);
       }
     });
@@ -725,7 +719,6 @@ export class IronswornCharacterSheet extends ActorSheet {
         const html = await renderTemplate('systems/ironsworn/templates/dialog/gear-card.html', params);
         this.hoverCard = html;
 
-        await this._onSubmit(evt);
         this.render(true);
       }, 500);
     });
@@ -741,7 +734,6 @@ export class IronswornCharacterSheet extends ActorSheet {
       if (this.hoverCard) {
         delete this.hoverCard;
 
-        await this._onSubmit(evt);
         this.render(true);
       }
     });
@@ -757,7 +749,6 @@ export class IronswornCharacterSheet extends ActorSheet {
 
         delete this.hoverCard;
 
-        await this._onSubmit(evt);
         this.render(true);
       };
 
@@ -812,7 +803,6 @@ export class IronswornCharacterSheet extends ActorSheet {
           const html = await renderTemplate('systems/ironsworn/templates/dialog/asset-card.html', params);
           this.hoverCard = html;
 
-          await this._onSubmit(evt);
           this.render(true);
         };
 

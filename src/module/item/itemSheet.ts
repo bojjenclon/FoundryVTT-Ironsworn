@@ -84,7 +84,7 @@ export class IronswornItemSheet extends ItemSheet {
         'data.rank': parseInt(el.dataset.rankIdx)
       });
 
-      await this._onSubmit(evt);
+      this.render(true);
     });
 
     const progressPips = html.find('.progress .pip');
@@ -151,7 +151,6 @@ export class IronswornItemSheet extends ItemSheet {
         ['data.abilities.value']: abilities
       });
 
-      await this._onSubmit(evt);
       this.render(true);
     };
 
@@ -174,7 +173,7 @@ export class IronswornItemSheet extends ItemSheet {
         ['data.abilities.value']: abilities
       });
 
-      await this._onSubmit(evt);
+      this.render(true);
     };
 
     const setupEditor = () => {

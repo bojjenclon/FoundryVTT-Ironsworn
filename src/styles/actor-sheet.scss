@@ -311,12 +311,13 @@
         }
 
         .sheet-tabs {
-          // Override default styles
+          /* Override Default Styles */
           height: auto;
           flex: none;
           margin: 0;
           line-height: normal;
           border: none;
+          /* Override Default Styles */
 
           ul {
             display        : flex;

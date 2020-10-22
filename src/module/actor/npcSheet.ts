@@ -57,7 +57,7 @@ export class IronswornNPCSheet extends ActorSheet {
         'data.rank': parseInt(el.dataset.rankIdx)
       });
 
-      await this._onSubmit(evt);
+      this.render(true);
     });
   }
 }

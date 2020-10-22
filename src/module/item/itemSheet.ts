@@ -134,7 +134,7 @@ export class IronswornItemSheet extends ItemSheet {
 
   caretPosition: number = 0;
   isBlurred: boolean = false;
-  keyUpTimeout: number;
+  editorBlurTimeout: number;
 
   _assetListeners(html: JQuery) {
     const updateAcquired = async (evt, state) => {
@@ -178,13 +178,20 @@ export class IronswornItemSheet extends ItemSheet {
 
     const setupEditor = () => {
       const textArea = descEditor.find('textarea');
+      const generateTimeout = () => {
+        return setTimeout(() => {
+          this.isBlurred = true;
+          this.caretPosition = textArea.prop('selectionEnd');
+          textArea.trigger('blur');
+        }, 750);
+      };
 
       $(document).off('.editor');
       descEditor.off('.editor');
 
       $(document).on('keydown.editor', async (evt) => {
-        if (this.keyUpTimeout) {
-          clearTimeout(this.keyUpTimeout);
+        if (this.editorBlurTimeout) {
+          clearTimeout(this.editorBlurTimeout);
         }
 
         if (this.isBlurred) {
@@ -205,18 +212,15 @@ export class IronswornItemSheet extends ItemSheet {
 
         this.editingAbilityText = text;
 
-        clearTimeout(this.keyUpTimeout);
-        this.keyUpTimeout = setTimeout(() => {
-          this.isBlurred = true;
-          this.caretPosition = textArea.prop('selectionEnd');
-          textArea.trigger('blur');
-        }, 750);
+        clearTimeout(this.editorBlurTimeout);
+        this.editorBlurTimeout = generateTimeout();
       });
 
       textArea.on('mouseup.editor', async (evt) => {
-        clearTimeout(this.keyUpTimeout);
-
         this.caretPosition = textArea.prop('selectionEnd');
+
+        clearTimeout(this.editorBlurTimeout);
+        this.editorBlurTimeout = generateTimeout();
       });
 
       descEditor.find('.actions .close').on('click.editor', async (evt) => {

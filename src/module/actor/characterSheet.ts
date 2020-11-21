@@ -457,6 +457,10 @@ export class IronswornCharacterSheet extends ActorSheet {
 
           const bond = actor.getOwnedItem(bondId);
 
+          if (!bond) {
+            return;
+          }
+
           this.bondHoveredIdx = idx;
 
           const position = $(target).position();
@@ -540,13 +544,19 @@ export class IronswornCharacterSheet extends ActorSheet {
         const { vowId } = target.dataset;
         const idx = parseInt(target.dataset.idx);
 
-        // If we have a bond, show its info card
+        // If we're already showing this vow, nothing more to do
         if (this.vowHoveredIdx === idx) {
           return;
         }
 
         const vow = actor.getOwnedItem(vowId);
 
+        // No vow was found, break out early
+        if (!vow) {
+          return;
+        }
+
+        // If we have a vow, show its info card
         this.vowHoveredIdx = idx;
 
         const position = $(target).position();
@@ -630,6 +640,10 @@ export class IronswornCharacterSheet extends ActorSheet {
 
         const asset = actor.getOwnedItem(assetId);
 
+        if (!asset) {
+          return;
+        }
+
         this.assetHoveredIdx = idx;
         this.assetAbilityIdx = 0;
 
@@ -708,6 +722,10 @@ export class IronswornCharacterSheet extends ActorSheet {
         }
 
         const gear = actor.getOwnedItem(gearId);
+
+        if (!gear) {
+          return;
+        }
 
         this.gearHoveredIdx = idx;
 

@@ -4,6 +4,17 @@ export async function migrateActors(from: number, to: number) {
     for (let actor of game.actors.entities) {
       const data = duplicate(actor.data);
 
+      if (data.type === 'npc') {
+        // Add progress array
+        const progressArray = [];
+        for (let i = 0; i < 10; i++) {
+          progressArray.push(0);
+        }
+        data.data.progress = {
+          value: progressArray
+        };
+      }
+
       data.data.version = 2;
 
       await actor.update(data, {});

@@ -22,7 +22,7 @@ import { IronswornItemSheet } from './module/item/itemSheet';
 import { IronswornNPCSheet } from './module/actor/npcSheet.js';
 import { migrateActors, migrateItems } from './module/migrate.js';
 
-const CURRENT_ACTOR_VERSION = 1;
+const CURRENT_ACTOR_VERSION = 2;
 const CURRENT_ITEM_VERSION = 2;
 
 /* ------------------------------------ */

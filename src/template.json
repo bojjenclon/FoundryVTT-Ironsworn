@@ -6,7 +6,7 @@
     ],
     "templates": {
       "common": {
-        "version": 1
+        "version": 2
       }
     },
     "character": {
@@ -86,6 +86,9 @@
         "common"
       ],
       "rank": 0,
+      "progress": {
+        "value": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
       "features": {
         "value": ""
       },

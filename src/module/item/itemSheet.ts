@@ -95,7 +95,7 @@ export class IronswornItemSheet extends ItemSheet {
     const progressPips = html.find('.progress .pip');
     progressPips.on('mouseover', evt => {
       const target = evt.currentTarget;
-      progressPips.each((idx, el) => {
+      progressPips.each((_idx, el) => {
         $(el).addClass('hover');
 
         if (el == target) {
@@ -106,7 +106,7 @@ export class IronswornItemSheet extends ItemSheet {
 
     progressPips.on('mouseout', evt => {
       const target = evt.currentTarget;
-      progressPips.each((idx, el) => {
+      progressPips.each((_idx, el) => {
         $(el).removeClass('hover');
 
         if (el == target) {
@@ -116,6 +116,8 @@ export class IronswornItemSheet extends ItemSheet {
     });
 
     progressPips.on('click', async (evt) => {
+      evt.preventDefault();
+
       const { item } = this;
 
       const btn = evt.button;
@@ -136,6 +138,8 @@ export class IronswornItemSheet extends ItemSheet {
     });
 
     progressPips.on('contextmenu', async (evt) => {
+      evt.preventDefault();
+
       const { item } = this;
 
       const target = evt.currentTarget;
@@ -153,6 +157,8 @@ export class IronswornItemSheet extends ItemSheet {
     });
 
     progressPips.on('mousewheel DOMMouseScroll', async (evt) => {
+      evt.preventDefault();
+
       const origEvt = evt.originalEvent as any;
       const isScrollUp = origEvt.wheelDelta > 0 || origEvt.detail < 0;
 

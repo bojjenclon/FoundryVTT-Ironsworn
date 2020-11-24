@@ -16,6 +16,16 @@
       </div>
     </div>
 
+    <div class="progress">
+      {{#each marks as |prog|}}
+      <div class="pip" data-idx="{{@index}}">
+        {{#if (gt prog 0)}}
+        <img src="{{progressMark prog}}">
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+
     <div class="input-group">
       <label for="data.features">Features</label>
       <textarea class="features" name="data.features.value">{{data.features.value}}</textarea>

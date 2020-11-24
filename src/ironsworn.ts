@@ -20,6 +20,10 @@ import { IronswornCharacterSheet } from './module/actor/characterSheet';
 import { IronswornItem } from './module/item/item';
 import { IronswornItemSheet } from './module/item/itemSheet';
 import { IronswornNPCSheet } from './module/actor/npcSheet.js';
+import { migrateActors, migrateItems } from './module/migrate.js';
+
+const CURRENT_ACTOR_VERSION = 1;
+const CURRENT_ITEM_VERSION = 2;
 
 /* ------------------------------------ */
 /* Initialize system					*/
@@ -62,15 +66,40 @@ Hooks.once('init', async function () {
 /* Setup system							*/
 /* ------------------------------------ */
 Hooks.once('setup', function () {
-	// Do anything after initialization but before
-	// ready
+	// Do anything after initialization but before ready
 });
 
 /* ------------------------------------ */
 /* When ready							*/
 /* ------------------------------------ */
-Hooks.once('ready', function () {
-	// Do anything once the system is ready
+Hooks.once('ready', async function () {
+	// Migration handling
+	if (!game.user.isGM) {
+		return;
+	}
+
+	const actorMigrationVersion = game.settings.get('ironsworn', 'actorMigrationVersion');
+	const itemMigrationVersion = game.settings.get('ironsworn', 'itemMigrationVersion');
+
+	const didMigrate = actorMigrationVersion < CURRENT_ACTOR_VERSION || itemMigrationVersion < CURRENT_ITEM_VERSION;
+
+	if (actorMigrationVersion < CURRENT_ACTOR_VERSION) {
+		ui.notifications.info('Performing actor migration. Please do not close Foundry or access/modify actors at this time.');
+
+		await migrateActors(actorMigrationVersion, CURRENT_ACTOR_VERSION);
+		await game.settings.set('ironsworn', 'actorMigrationVersion', CURRENT_ACTOR_VERSION);
+	}
+
+	if (itemMigrationVersion < CURRENT_ITEM_VERSION) {
+		ui.notifications.info('Performing item migration. Please do not close Foundry or access/modify items at this time.');
+
+		await migrateItems(itemMigrationVersion, CURRENT_ITEM_VERSION);
+		await game.settings.set('ironsworn', 'itemMigrationVersion', CURRENT_ITEM_VERSION);
+	}
+
+	if (didMigrate) {
+		ui.notifications.info('Migration complete, you may proceed to use Foundry.');
+	}
 });
 
 // Add any additional hooks if necessary

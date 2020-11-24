@@ -107,7 +107,7 @@
     ],
     "templates": {
       "common": {
-        "version": 1
+        "version": 2
       }
     },
     "equipment": {
@@ -125,7 +125,7 @@
       ],
       "rank": 0,
       "progress": {
-        "value": 0
+        "value": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       },
       "complete": false
     },

@@ -39,7 +39,7 @@ export const registerHandlebars = () => {
     return lhs <= rhs;
   });
 
-  Handlebars.registerHelper('ge', (lhs, rhs) => {
+  Handlebars.registerHelper('gt', (lhs, rhs) => {
     return lhs > rhs;
   });
 
@@ -134,5 +134,23 @@ export const registerHandlebars = () => {
     }
 
     return lines.join('\n');
+  });
+
+  Handlebars.registerHelper('progressMark', value => {
+    switch (value) {
+      case 1:
+        return '/systems/ironsworn/assets/progress/one.png';
+
+      case 2:
+        return '/systems/ironsworn/assets/progress/two.png';
+      
+      case 3:
+        return '/systems/ironsworn/assets/progress/three.png';
+
+      case 4:
+        return '/systems/ironsworn/assets/progress/full.png';
+    }
+
+    return '';
   });
 }

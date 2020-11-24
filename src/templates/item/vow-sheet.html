@@ -14,9 +14,13 @@
     </div>
 
     <div class="progress">
-      {{#repeat 10}}
-      <div class="pip {{#if (lt @index ../data.progress.value)}}active{{/if}}" data-idx="{{@index}}"></div>
-      {{/repeat}}
+      {{#each marks as |prog|}}
+      <div class="pip" data-idx="{{@index}}">
+        {{#if (gt prog 0)}}
+        <img src="{{progressMark prog}}">
+        {{/if}}
+      </div>
+      {{/each}}
     </div>
 
     <div class="input-group">

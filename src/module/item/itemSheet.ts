@@ -23,9 +23,12 @@ export class IronswornItemSheet extends ItemSheet {
   }
 
   _vowData(data) {
+    const { item } = this;
+    const itemData = item.data.data;
+
     data.ranks = Ironsworn.rank;
 
-    const rankIdx = this.item.data.data.rank;
+    const rankIdx = itemData.rank;
     let currentRank = 'troublesome';
     Ironsworn.rank.forEach((rank, idx) => {
       if (idx === rankIdx) {
@@ -34,6 +37,8 @@ export class IronswornItemSheet extends ItemSheet {
       }
     });
     data.currentRank = currentRank;
+
+    data.marks = itemData.progress.value;
   }
 
   _assetData(data) {
@@ -115,19 +120,69 @@ export class IronswornItemSheet extends ItemSheet {
 
       const btn = evt.button;
       const target = evt.currentTarget;
+      const markIndex = parseInt(target.dataset.idx);
 
       if (btn === 0) {
+        const progressValues = duplicate(item.data.data.progress.value);
+
+        for (let i = 0; i <= markIndex; i++) {
+          progressValues[i] = 4;
+        }
+
         item.update({
-          'data.progress.value': parseInt(target.dataset.idx) + 1
-        })
+          ['data.progress.value']: progressValues
+        });
       }
     });
 
     progressPips.on('contextmenu', async (evt) => {
       const { item } = this;
 
+      const target = evt.currentTarget;
+      const markIndex = parseInt(target.dataset.idx);
+
+      const progressValues = duplicate(item.data.data.progress.value);
+
+      for (let i = markIndex; i < progressValues.length; i++) {
+        progressValues[i] = 0;
+      }
+
       item.update({
-        'data.progress.value': 0
+        ['data.progress.value']: progressValues
+      });
+    });
+
+    progressPips.on('mousewheel DOMMouseScroll', async (evt) => {
+      const origEvt = evt.originalEvent as any;
+      const isScrollUp = origEvt.wheelDelta > 0 || origEvt.detail < 0;
+
+      const target = evt.currentTarget;
+      const markIndex = parseInt(target.dataset.idx);
+
+      const progressValues = duplicate(item.data.data.progress.value);
+      let markValue = progressValues[markIndex];
+
+      if (isScrollUp) {
+        markValue++;
+      } else {
+        markValue--;
+      }
+
+      if (markValue < 0) {
+        markValue = 0
+      } else if (markValue > 4) {
+        markValue = 4;
+      }
+
+      // All previous marks should be filled in
+      for (let i = 0; i <= markIndex; i++) {
+        progressValues[i] = 4;
+      }
+
+      progressValues[markIndex] = markValue;
+
+      item.update({
+        ['data.progress.value']: progressValues
       });
     });
   }

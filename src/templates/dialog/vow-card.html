@@ -2,7 +2,15 @@
   <div class="name">{{name}}</div>
   <hr>
   <div class="rank">{{rank}}</div>
-  <div class="progress-text">{{progress}}</div>
+  <div class="progress">
+    {{#each marks as |prog|}}
+    <div class="pip" data-idx="{{@index}}">
+      {{#if (gt prog 0)}}
+      <img src="{{progressMark prog}}">
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
   <hr>
   <div class="desc">{{{formatMarkdown text}}}</div>
 </div>

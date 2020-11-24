@@ -565,7 +565,7 @@ export class IronswornCharacterSheet extends ActorSheet {
           y: `${position.top}px`,
           name: vow.name,
           rank: Ironsworn.rank[vow.data.data.rank],
-          progress: `${vow.data.data.progress.value} / 10`,
+          marks: vow.data.data.progress.value,
           text: vow.data.data.description.value
         };
         const html = await renderTemplate('systems/ironsworn/templates/dialog/vow-card.html', params);

@@ -654,11 +654,13 @@
       text-transform: uppercase;
     }
 
-    .progress-text {
-      font-family: OPTILagoon, Arial-bold, arial, sans-serif;
-      font-size  : 10px;
-
-      text-transform: uppercase;
+    .progress {
+      margin-top: 4px;
+      
+      .pip {
+        width: 20px;
+        height: 20px;
+      }
     }
 
     .desc {

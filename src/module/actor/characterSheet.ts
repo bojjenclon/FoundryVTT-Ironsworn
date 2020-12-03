@@ -43,8 +43,6 @@ export class IronswornCharacterSheet extends ActorSheet {
     return `systems/ironsworn/templates/actor/${type}-sheet.html`;
   }
 
-  ctrlDown: boolean = false;
-
   bondHoveredIdx: number = -1;
   vowHoveredIdx: number = -1;
   assetHoveredIdx: number = -1;
@@ -145,19 +143,6 @@ export class IronswornCharacterSheet extends ActorSheet {
   activateListeners(html: JQuery) {
     super.activateListeners(html);
 
-    // Capture control key state
-    $('body').on('keydown.character', evt => {
-      if (evt.key === 'Control') {
-        this.ctrlDown = true;
-      }
-    });
-
-    $('body').on('keyup.character', evt => {
-      if (this.ctrlDown && evt.key === 'Control') {
-        this.ctrlDown = false;
-      }
-    });
-
     html.find('.stat .label').on('click', async (evt) => {
       const target = evt.currentTarget;
       const stat = target.dataset.stat;
@@ -209,13 +194,15 @@ export class IronswornCharacterSheet extends ActorSheet {
 
     const expPips = html.find('.experience .pip');
     expPips.on('mouseover', evt => {
+      const ctrlDown = evt.ctrlKey;
+
       const { actor } = this;
       const expEarned = actor.data.data.experience.earned;
 
       const target = evt.currentTarget;
       let isActive = true;
       expPips.each((idx, el) => {
-        if (!this.ctrlDown) {
+        if (!ctrlDown) {
           $(el).find('.image').addClass(isActive ? 'earned-hover-active' : 'earned-hover-inactive');
         } else if (idx < expEarned) {
           // If we're trying to show used XP, we want to preserve the appearance of earned
@@ -243,6 +230,8 @@ export class IronswornCharacterSheet extends ActorSheet {
     });
 
     expPips.on('click', async (evt) => {
+      const ctrlDown = evt.ctrlKey;
+
       const { actor } = this;
 
       const btn = evt.button;
@@ -252,7 +241,7 @@ export class IronswornCharacterSheet extends ActorSheet {
         const pipIdx = parseInt(target.dataset.idx);
 
         // Set used XP if control is down
-        if (this.ctrlDown) {
+        if (ctrlDown) {
           const expEarned = actor.data.data.experience.earned;
 
           // Don't let used exp exceed earned exp
@@ -828,7 +817,9 @@ export class IronswornCharacterSheet extends ActorSheet {
         };
 
         cardEl.on('wheel.hover', async (evt) => {
-          if (this.ctrlDown) {
+          const ctrlDown = evt.ctrlKey;
+
+          if (ctrlDown) {
             const wheelEvt = evt.originalEvent as WheelEvent;
             await abilityScroll(evt, Math.sign(wheelEvt.deltaY));
           }

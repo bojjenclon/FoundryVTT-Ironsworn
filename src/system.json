@@ -2,7 +2,7 @@
   "name": "ironsworn",
   "title": "Ironsworn",
   "description": "",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "bojjenclon",
   "authors": [
     {
@@ -87,7 +87,7 @@
   "gridDistance": 1,
   "gridUnits": "",
   "minimumCoreVersion": "0.6.0",
-  "compatibleCoreVersion": "0.7.7",
+  "compatibleCoreVersion": "0.7.9",
   "templateVersion": 2,
   "url": "",
   "manifest": "",

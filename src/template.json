@@ -106,7 +106,8 @@
       "vow",
       "bond",
       "asset",
-      "move"
+      "move",
+      "track"
     ],
     "templates": {
       "common": {
@@ -126,6 +127,9 @@
       "templates": [
         "common"
       ],
+      "description": {
+        "value": ""
+      },
       "rank": 0,
       "progress": {
         "value": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -161,6 +165,19 @@
       "description": {
         "value": ""
       }
+    },
+    "track": {
+      "templates": [
+        "common"
+      ],
+      "description": {
+        "value": ""
+      },
+      "rank": 0,
+      "progress": {
+        "value": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      "complete": false
     }
   }
 }

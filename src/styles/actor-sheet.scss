@@ -543,6 +543,17 @@
             }
           }
         }
+
+        .inventory {
+          .lined-header {
+            .text {
+              &:hover {
+                cursor: pointer;
+                color : #666666;
+              }
+            }
+          }
+        }
       }
 
       .rhs {

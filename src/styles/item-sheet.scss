@@ -9,6 +9,11 @@
     min-height: 300px;
   }
 
+  &.track {
+    min-width : 600px;
+    min-height: 300px;
+  }
+
   &.move {
     min-width : 500px;
     min-height: 500px;
@@ -229,12 +234,13 @@
       display: flex;
 
       input.quantity {
-        flex: 0;
+        flex: 0 0 2em;
 
         width      : 3.5em;
         margin-left: 2px;
 
         font-size: 1rem;
+        text-align: center;
 
         background   : rgba(0, 0, 0, 0.05);
         border       : 1px solid #7a7971;

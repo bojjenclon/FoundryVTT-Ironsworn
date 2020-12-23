@@ -1,0 +1,31 @@
+<form class="{{cssClass}} track flexcol" autocomplete="off">
+  <header class="sheet-header">
+    <input class="name" type="text" name="name" value="{{item.name}}" data-dtype="String" />
+  </header>
+
+  <div class="sheet-body">
+    <div class="ranks">
+      {{#each ranks as |rank|}}
+      <div class="rank-wrapper">
+        <input id="rank-{{rank}}" type="radio" {{checked (eq rank ../currentRank)}} data-rank-idx="{{@index}}" />
+        <label for="rank-{{rank}}">{{rank}}</label>
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="progress">
+      {{#each marks as |prog|}}
+      <div class="pip" data-idx="{{@index}}">
+        {{#if (gt prog 0)}}
+        <img src="{{progressMark prog}}">
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="input-group">
+      <label for="description">Description</label>
+      <textarea id="description" class="description" name="data.description.value">{{data.description.value}}</textarea>
+    </div>
+  </div>
+</form>

@@ -673,6 +673,17 @@ export class IronswornCharacterSheet extends ActorSheet {
       }
     });
 
+    const gearHeader = html.find('.inventory .lined-header .text');
+    gearHeader.on('click', async (evt) => {
+      const { actor } = this;
+
+      await actor.createOwnedItem({
+        name: 'New Gear',
+        type: 'equipment',
+        data: {}
+      }, { renderSheet: true });
+    });
+
     const gearList = html.find('.equipment-list .gear');
     gearList.on('click', async (evt) => {
       const { actor } = this;
